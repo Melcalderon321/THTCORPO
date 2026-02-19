@@ -128,6 +128,7 @@
 
         .unit-card-description {
             font-size: 1rem;
+            font-weight: 700;
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             margin-bottom: 2rem;
@@ -192,9 +193,9 @@
         /* ADN & Culture - Netflix Style */
         .giant-text {
             font-size: clamp(2.5rem, 8vw, 7.5rem);
-            font-weight: 900;
+            font-weight: 700;
             line-height: 1.0;
-            letter-spacing: -0.05em;
+            letter-spacing: 0;
             text-transform: uppercase;
             color: transparent;
             -webkit-text-stroke: 2px rgba(255, 255, 255, 0.4);
@@ -215,9 +216,9 @@
 
         .huge-title {
             font-size: clamp(3rem, 9vw, 8.5rem);
-            font-weight: 950;
+            font-weight: 700;
             line-height: 0.9;
-            letter-spacing: -0.04em;
+            letter-spacing: 0;
             text-transform: uppercase;
             text-align: center;
             color: #fff;
@@ -257,11 +258,15 @@
 
         .highlight-card {
             padding: 2rem;
+            border: 1px solid var(--glass-border);
             border-left: 4px solid #3b82f6;
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 0 1.5rem 1.5rem 0;
             position: relative;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
         .highlight-card:hover {
@@ -393,19 +398,18 @@
             <img src="assets/logo-main.png" alt="THT Corporation" class="h-10 w-auto">
         </div>
         <nav class="hidden md:flex gap-8 items-center font-medium text-sm">
-            <a href="#inicio"
-                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Inicio</a>
+            <a href="#inicio" class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Inicio</a>
             <a href="#unidades"
-                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Institucional</a>
+                class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Institucional</a>
             <a href="#experiencia"
-                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Empresas</a>
+                class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Empresas</a>
             <a href="#experiencia"
-                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Talento
+                class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Talento
                 humano</a>
             <a href="#contacto"
-                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Contacto</a>
+                class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Contacto</a>
             <a href="#contacto"
-                class="ml-4 px-6 py-2.5 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-500 transition-all text-xs uppercase tracking-widest shadow-[0_5px_15px_rgba(0,102,255,0.3)]">Contáctanos</a>
+                class="ml-4 px-6 py-2.5 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-500 transition-all text-xs tracking-widest shadow-[0_5px_15px_rgba(0,102,255,0.3)]">Contáctanos</a>
         </nav>
         <button class="md:hidden text-white">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -426,21 +430,21 @@
                 Holding tecnológico
             </span>
             <h1
-                class="text-5xl md:text-8xl font-black mb-4 leading-[1.05] opacity-0 translate-y-8 reveal tracking-tighter text-center">
-                <span class="text-gradient">20 años</span> <br class="md:hidden"> <span class="text-blue-500">impulsando
+                class="text-5xl md:text-8xl font-bold mb-4 leading-[1.05] opacity-0 translate-y-8 reveal tracking-normal text-center">
+                <span class="text-white">20 años</span> <br class="md:hidden"> <span class="text-blue-500">impulsando
                     la innovación global</span>
             </h1>
-            <p class="text-gray-500 max-w-2xl mx-auto mb-8 opacity-0 translate-y-8 reveal text-lg text-center">
+            <p class="text-white max-w-2xl mx-auto mb-8 opacity-0 translate-y-8 reveal text-lg text-center">
                 Lideramos la transformación empresarial a través de tecnología propia y equipos de alto rendimiento en
                 EE.UU, España, Argentina, Chile y Latam.
             </p>
             <div class="flex flex-col sm:flex-row gap-6 justify-center opacity-0 translate-y-8 reveal items-center">
                 <a href="#unidades"
-                    class="px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl transition-all shadow-[0_10px_30px_rgba(0,102,255,0.3)] hover:scale-105 uppercase tracking-widest text-sm text-center">
+                    class="px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl transition-all shadow-[0_10px_30px_rgba(0,102,255,0.3)] hover:scale-105 tracking-widest text-sm text-center">
                     Conocé más
                 </a>
                 <a href="#nosotros"
-                    class="px-10 py-5 glass-card hover:bg-white/10 font-black rounded-2xl transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-sm">
+                    class="px-10 py-5 glass-card hover:bg-white/10 font-black rounded-2xl transition-all flex items-center justify-center gap-3 tracking-widest text-sm">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                     </svg>
@@ -482,7 +486,7 @@
         <div class="text-left mb-24 max-w-2xl">
             <span class="section-badge mb-6 reveal">Nuestras
                 Unidades</span>
-            <h2 class="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">Un ecosistema de innovación
+            <h2 class="text-5xl md:text-7xl font-bold mb-8 leading-tight tracking-normal">Un ecosistema de innovación
             </h2>
             <div class="w-20 h-2 bg-blue-600 rounded-full"></div>
         </div>
@@ -497,8 +501,7 @@
                         Latinoamérica y España. Más de 20 años transformando marcas e impulsando su crecimiento global.
                     </p>
                     <div class="unit-card-link">
-                        <span
-                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -519,8 +522,7 @@
                         estratégica para publicidad de afiliados, operando cuentas MCC y líneas de crédito con foco en
                         escalabilidad y control total.</p>
                     <div class="unit-card-link">
-                        <span
-                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -529,7 +531,7 @@
                     </div>
                 </div>
                 <div class="unit-card-overlay"></div>
-                <img src="assets/unit-placeholder.jpg" class="unit-card-image" alt="THT Ads">
+                <img src="assets/unit-ads.jpg" class="unit-card-image" alt="THT Ads">
             </div>
 
             <!-- Card 3: THT Devo -->
@@ -541,8 +543,7 @@
                         Soluciones orientadas a la automatización inteligente y la innovación tecnológica disruptiva.
                     </p>
                     <div class="unit-card-link">
-                        <span
-                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -563,8 +564,7 @@
                         España). Generamos valor patrimonial bajo una sólida visión financiera y estratégica de largo
                         plazo.</p>
                     <div class="unit-card-link">
-                        <span
-                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -585,8 +585,7 @@
                         personas en situación de vulnerabilidad. Somos el puente sólido entre la solidaridad e impacto
                         social real.</p>
                     <div class="unit-card-link">
-                        <span
-                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -607,8 +606,7 @@
                         garantizada y asesoramiento técnico especializado para proyectos paisajísticos de alto nivel.
                     </p>
                     <div class="unit-card-link">
-                        <span
-                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -639,7 +637,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <span class="leading-none">con visión</span>
+                        <span class="font-black leading-none text-7xl md:text-9xl">con visión</span>
                     </div>
                     de futuro
                 </h2>
@@ -692,10 +690,10 @@
                         futuro tecnológico.</p>
                     <div class="flex flex-wrap gap-6">
                         <a href="#contacto"
-                            class="px-10 py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-500 transition-all text-sm uppercase tracking-widest shadow-[0_10px_30px_rgba(0,102,255,0.3)]">Sumate
+                            class="px-10 py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-500 transition-all text-sm tracking-widest shadow-[0_10px_30px_rgba(0,102,255,0.3)]">Sumate
                             al equipo</a>
                         <a href="#contacto"
-                            class="px-10 py-5 glass-card text-white font-black rounded-2xl hover:bg-white/10 transition-all text-sm uppercase tracking-widest">Cultura
+                            class="px-10 py-5 glass-card text-white font-black rounded-2xl hover:bg-white/10 transition-all text-sm tracking-widest">Cultura
                             THT</a>
                     </div>
                 </div>
@@ -703,7 +701,7 @@
                 <!-- Pillar 1: Autonomía -->
                 <div class="culture-pillar py-20 border-t border-white/10" id="pillar-1">
                     <div class="text-7xl mb-12 text-blue-500">01</div>
-                    <h3 class="text-6xl font-black mb-8 uppercase tracking-tighter font-poppins">Autonomía</h3>
+                    <h3 class="text-6xl font-black mb-8 uppercase tracking-normal font-poppins">Autonomía</h3>
                     <p class="text-xl text-gray-400 font-inter max-w-md">Empoderamos a cada líder y equipo para tomar
                         decisiones de impacto real, fomentando la responsabilidad y el crecimiento individual.</p>
                 </div>
@@ -711,7 +709,7 @@
                 <!-- Pillar 2: Aprendizaje -->
                 <div class="culture-pillar py-20 border-t border-white/10" id="pillar-2">
                     <div class="text-7xl mb-12 text-blue-500">02</div>
-                    <h3 class="text-6xl font-black mb-8 uppercase tracking-tighter font-poppins">Aprendizaje</h3>
+                    <h3 class="text-6xl font-bold mb-8 uppercase tracking-normal font-poppins">Aprendizaje</h3>
                     <p class="text-xl text-gray-400 font-inter max-w-md">La evolución es constante. Promovemos una
                         cultura de formación continua y curiosidad tecnológica inagotable.</p>
                 </div>
@@ -719,7 +717,7 @@
                 <!-- Pillar 3: Innovación -->
                 <div class="culture-pillar py-20 border-t border-white/10" id="pillar-3">
                     <div class="text-7xl mb-12 text-blue-500">03</div>
-                    <h3 class="text-6xl font-black mb-8 uppercase tracking-tighter font-poppins">Innovación</h3>
+                    <h3 class="text-6xl font-bold mb-8 uppercase tracking-normal font-poppins">Innovación</h3>
                     <p class="text-xl text-gray-400 font-inter max-w-md">No seguimos tendencias, las creamos.
                         Desarrollamos soluciones disruptivas que desafían lo establecido.</p>
                 </div>
@@ -727,7 +725,7 @@
                 <!-- Pillar 4: Bienestar -->
                 <div class="culture-pillar py-20 border-t border-white/10" id="pillar-4">
                     <div class="text-7xl mb-12 text-blue-500">04</div>
-                    <h3 class="text-6xl font-black mb-8 uppercase tracking-tighter font-poppins">Bienestar</h3>
+                    <h3 class="text-6xl font-bold mb-8 uppercase tracking-normal font-poppins">Bienestar</h3>
                     <p class="text-xl text-gray-400 font-inter max-w-md">El talento brilla cuando está en equilibrio.
                         Priorizamos la salud, la flexibilidad y un ambiente colaborativo sano.</p>
                 </div>
@@ -778,7 +776,7 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center">
             <div class="md:w-1/2">
                 <span class="section-badge mb-6">Comunicate</span>
-                <h2 class="text-5xl md:text-7xl font-black mb-12 tracking-tighter">Hablemos de futuro</h2>
+                <h2 class="text-5xl md:text-7xl font-bold mb-12 tracking-normal">Hablemos de futuro</h2>
                 <div class="space-y-12">
                     <div class="flex gap-6 items-center">
                         <div
@@ -786,7 +784,7 @@
                             📧</div>
                         <div>
                             <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">Escribinos</p>
-                            <p class="text-2xl font-bold">contacto@thtcorporation.com</p>
+                            <p class="text-xl font-normal">contacto@thtcorporation.com</p>
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-8">
@@ -832,8 +830,8 @@
                                 class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-blue-500 outline-none transition-all"
                                 placeholder="¿Cómo podemos ayudarte?"></textarea>
                         </div>
-                        <button
-                            class="w-full py-5 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl transition-all uppercase tracking-[0.2em] text-sm shadow-[0_10px_30px_rgba(0,102,255,0.3)]">
+                        <button type="submit"
+                            class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-xl transition-all shadow-lg hover:shadow-blue-600/30 tracking-widest">
                             Enviar mensaje
                         </button>
                     </form>
@@ -843,78 +841,93 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-24 px-6 border-t border-white/5 bg-[#030303] relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-20 mb-20">
-                <div class="max-w-md">
-                    <div class="flex items-center mb-10">
-                        <img src="assets/logo-main.png" alt="THT Corporation" class="h-16 w-auto">
-                    </div>
-                    <p class="text-gray-500 text-lg mb-6 leading-relaxed font-light">
+    <footer class="py-20 px-6 bg-[#003399] relative text-white font-poppins text-center md:text-left">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 items-center justify-items-center text-left">
+
+                <!-- Column 1: Description -->
+                <div class="space-y-6">
+                    <img src="assets/logo-footer.png" alt="THT Corporation" class="h-20 w-auto mb-4 object-contain">
+                    <p class="text-sm leading-relaxed text-white/90">
                         Somos pioneros en la industria digital, y nuestro know-how es el resultado de dos décadas de
                         experiencia, dedicación y evolución constante.
                     </p>
-                    <p class="text-gray-500 text-lg mb-10 leading-relaxed font-light">
+                    <p class="text-sm leading-relaxed text-white/90">
                         THT Corporation es un ecosistema donde la sinergia entre nuestras marcas genera un valor que va
                         más allá de lo convencional.
                     </p>
-                    <div class="flex gap-4">
-                        <a href="#"
-                            class="w-12 h-12 rounded-xl glass-card flex items-center justify-center hover:bg-blue-600 transition-all border-white/10 text-xl">in</a>
-                        <a href="#"
-                            class="w-12 h-12 rounded-xl glass-card flex items-center justify-center hover:bg-blue-600 transition-all border-white/10 text-xl">ig</a>
-                        <a href="#"
-                            class="w-12 h-12 rounded-xl glass-card flex items-center justify-center hover:bg-blue-600 transition-all border-white/10 text-xl">fb</a>
+                </div>
+
+                <!-- Column 2: Contact -->
+                <div>
+                    <h4 class="font-bold mb-6 text-sm">Contáctanos</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                </path>
+                            </svg>
+                            <span>+54 9 2612712289</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <span>info@thtcorporation.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Workplace Palmares <br> Ruta Panamericana 2650, <br> Godoy Cruz, Mendoza,
+                                Argentina.</span>
+                        </li>
+                    </ul>
+                    <div class="flex gap-4 mt-6">
+                        <a href="#" class="hover:text-blue-200 transition-colors"><svg class="w-5 h-5"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg></a>
+                        <a href="#" class="hover:text-blue-200 transition-colors"><svg class="w-5 h-5" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7.8 2h8.4C19.4 2 22 4.4 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.4 22 2 19.4 2 16V7.8A5.8 5.8 0 017.8 2m0 2a3.8 3.8 0 00-3.8 3.8v8.4a3.8 3.8 0 003.8 3.8h8.4a3.8 3.8 0 003.8-3.8V7.8A3.8 3.8 0 0016.2 4H7.8z">
+                                </path>
+                            </svg></a>
+                        <a href="#" class="hover:text-blue-200 transition-colors"><svg class="w-5 h-5"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                            </svg></a>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-20 lg:gap-32">
-                    <!-- Column 1: Contáctanos -->
-                    <div class="flex flex-col gap-8">
-                        <span class="font-black text-xs uppercase tracking-[0.4em] text-blue-500">Contáctanos</span>
-                        <div class="space-y-6">
-                            <a href="https://wa.me/5492612712289" target="_blank"
-                                class="flex items-center gap-4 text-gray-500 hover:text-white transition-colors group">
-                                <span class="text-xl"></span>
-                                <span class="text-lg font-medium">+54 9 2612712289</span>
-                            </a>
-                            <a href="mailto:info@thtcorporation.com"
-                                class="flex items-center gap-4 text-gray-500 hover:text-white transition-colors group">
-                                <span class="text-xl">✉</span>
-                                <span class="text-lg font-medium">info@thtcorporation.com</span>
-                            </a>
-                            <div class="flex items-start gap-4 text-gray-500">
-                                <span class="text-xl mt-1"></span>
-                                <p class="text-base leading-relaxed font-light">
-                                    Workplace Palmares<br>
-                                    Ruta Panamericana 2650,<br>
-                                    Godoy Cruz, Mendoza, Argentina.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Column 2: Caso de Éxito -->
-                    <div class="flex flex-col gap-8">
-                        <span class="font-black text-xs uppercase tracking-[0.4em] text-blue-500">Caso de Éxito</span>
-                        <div class="flex flex-col gap-4">
-                            <a href="#"
-                                class="text-gray-500 hover:text-white transition-colors text-lg font-medium">Institucional</a>
-                            <a href="#"
-                                class="text-gray-500 hover:text-white transition-colors text-lg font-medium">Empresas</a>
-                            <a href="#"
-                                class="text-gray-500 hover:text-white transition-colors text-lg font-medium">Talento
-                                Humano</a>
-                            <a href="#contacto"
-                                class="text-gray-500 hover:text-white transition-colors text-lg font-medium">Contacto</a>
-                        </div>
-                    </div>
+                <!-- Column 3: Links -->
+                <div>
+                    <h4 class="font-bold mb-6 text-sm">Caso de Éxito</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="#" class="hover:text-blue-200 transition-colors">Institucional</a></li>
+                        <li><a href="#" class="hover:text-blue-200 transition-colors">Empresas</a></li>
+                        <li><a href="#" class="hover:text-blue-200 transition-colors">Talento Humano</a></li>
+                        <li><a href="#" class="hover:text-blue-200 transition-colors">Contacto</a></li>
+                    </ul>
                 </div>
+
             </div>
 
-            <div
-                class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700 text-xs font-bold uppercase tracking-widest text-center">
-                <p>Diseño y desarrollo web realizado por Tehuentec by THT Corporation</p>
+            <!-- Bottom Copyright -->
+            <div class="text-center pt-8 mt-8 border-t border-white/10">
+                <p class="text-xs text-white/60">Diseño y desarrollo web realizado por Tehuentec by THT Corporation</p>
             </div>
         </div>
     </footer>
