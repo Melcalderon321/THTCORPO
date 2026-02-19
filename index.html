@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THT Corporation | Ecosistema de Innovación EMPRESARIAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0066FF;
+            --dark-blue: #003399;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        p,
+        span,
+        a,
+        label,
+        li,
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Mesh Gradient Background */
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 90% 90%, rgba(0, 51, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 0%, rgba(5, 5, 5, 1) 100%);
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+        }
+
+        .glass-header {
+            background: rgba(5, 5, 5, 0.3);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        /* Unit Cards - Accenture Style */
+        .unit-card {
+            position: relative;
+            height: 550px;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .unit-card:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .unit-card-content {
+            position: relative;
+            padding: 3rem;
+            height: 100%;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .unit-card-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            display: block;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .unit-card-title {
+            font-size: 2.25rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: #fff;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .unit-card-description {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .unit-card:hover .unit-card-description {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 300px;
+        }
+
+        .unit-card-link {
+            margin-top: auto;
+            align-self: flex-start;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .unit-card:hover .unit-card-link {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .unit-card-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+            filter: brightness(0.7);
+        }
+
+        .unit-card:hover .unit-card-image {
+            transform: scale(1.1);
+            filter: brightness(0.4) blur(2px);
+        }
+
+        .unit-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.8) 0%,
+                    transparent 40%,
+                    transparent 60%,
+                    rgba(0, 0, 0, 0.9) 100%);
+            z-index: 2;
+            transition: background 0.6s ease;
+        }
+
+        .unit-card:hover .unit-card-overlay {
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        /* ADN & Culture - Netflix Style */
+        .giant-text {
+            font-size: clamp(2.5rem, 8vw, 7.5rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.4);
+            /* Increased to 2px */
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Removed active fill state as per user preference */
+        .giant-text.active {
+            -webkit-text-stroke: 3px #fff;
+            /* Increased to 3px */
+        }
+
+        .scroll-reveal-text {
+            opacity: 0.1;
+            transition: opacity 0.3s ease;
+        }
+
+        .huge-title {
+            font-size: clamp(3rem, 9vw, 8.5rem);
+            font-weight: 950;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            text-align: center;
+            color: #fff;
+        }
+
+        .typo-window {
+            display: block;
+            width: 18vw;
+            height: 10vw;
+            min-width: 120px;
+            min-height: 70px;
+            border-radius: 1.5vw;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .play-indicator {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .play-indicator svg {
+            width: 3vw;
+            height: 3vw;
+            min-width: 24px;
+            min-height: 24px;
+            color: white;
+            filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.5));
+        }
+
+        .highlight-card {
+            padding: 2rem;
+            border-left: 4px solid #3b82f6;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0 1.5rem 1.5rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(10px);
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.4rem 1.25rem;
+            border-radius: 9999px;
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            color: #60a5fa;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            line-height: 1;
+        }
+
+        .reveal-container {
+            overflow: hidden;
+            display: block;
+        }
+
+        .reveal-item {
+            transform: translateY(100%);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Experience Scroll Section */
+        .experience-sticky {
+            position: relative;
+            background: #000;
+        }
+
+        .culture-pillar {
+            opacity: 0.5;
+            transform: scale(0.9);
+            filter: blur(4px);
+            transition: all 0.6s ease;
+        }
+
+        .culture-pillar.active {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+        }
+
+        .culture-image-container {
+            position: sticky;
+            top: 20%;
+            height: 60vh;
+            border-radius: 2rem;
+            overflow: hidden;
+        }
+
+        /* ADN Cards */
+        .adn-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .adn-card:hover {
+            border-color: var(--primary-blue);
+            background: rgba(0, 102, 255, 0.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-blue);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to bottom, #ffffff, #999999);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .flag-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Word Animation */
+        .word-animation span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mesh-bg"></div>
+    <div class="absolute inset-0 z-0 opacity-50">
+        <img src="assets/hero-bg.jpg" class="w-full h-full object-cover" alt="Background">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black"></div>
+    </div>
+
+    <!-- Header -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 glass-header px-6 py-4 flex justify-between items-center transition-all duration-300"
+        id="main-header">
+        <!-- Logo -->
+        <div class="flex items-center">
+            <img src="assets/logo-main.png" alt="THT Corporation" class="h-10 w-auto">
+        </div>
+        <nav class="hidden md:flex gap-8 items-center font-medium text-sm">
+            <a href="#inicio"
+                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Inicio</a>
+            <a href="#unidades"
+                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Institucional</a>
+            <a href="#experiencia"
+                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Empresas</a>
+            <a href="#experiencia"
+                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Talento
+                humano</a>
+            <a href="#contacto"
+                class="hover:text-blue-500 transition-colors uppercase tracking-widest text-xs font-bold">Contacto</a>
+            <a href="#contacto"
+                class="ml-4 px-6 py-2.5 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-500 transition-all text-xs uppercase tracking-widest shadow-[0_5px_15px_rgba(0,102,255,0.3)]">Contáctanos</a>
+        </nav>
+        <button class="md:hidden text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio"
+        class="min-h-screen pt-24 pb-12 px-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <div
+            class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full -z-10">
+        </div>
+
+        <div class="max-w-5xl w-full mx-auto relative z-10" id="hero-content">
+            <span class="section-badge mb-6 opacity-0 translate-y-4 reveal mx-auto">
+                Holding tecnológico
+            </span>
+            <h1
+                class="text-5xl md:text-8xl font-black mb-4 leading-[1.05] opacity-0 translate-y-8 reveal tracking-tighter text-center">
+                <span class="text-gradient">20 años</span> <br class="md:hidden"> <span class="text-blue-500">impulsando
+                    la innovación global</span>
+            </h1>
+            <p class="text-gray-500 max-w-2xl mx-auto mb-8 opacity-0 translate-y-8 reveal text-lg text-center">
+                Lideramos la transformación empresarial a través de tecnología propia y equipos de alto rendimiento en
+                EE.UU, España, Argentina, Chile y Latam.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center opacity-0 translate-y-8 reveal items-center">
+                <a href="#unidades"
+                    class="px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl transition-all shadow-[0_10px_30px_rgba(0,102,255,0.3)] hover:scale-105 uppercase tracking-widest text-sm text-center">
+                    Conocé más
+                </a>
+                <a href="#nosotros"
+                    class="px-10 py-5 glass-card hover:bg-white/10 font-black rounded-2xl transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-sm">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Ver video
+                </a>
+            </div>
+        </div>
+
+        <!-- Metrics -->
+        <div
+            class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto w-full px-6 opacity-0 translate-y-12 reveal-stagger">
+            <div
+                class="glass-card p-4 py-6 flex flex-col items-center justify-center glow-hover group transition-all duration-500 border-white/5">
+                <div class="flex items-baseline gap-1">
+                    <span class="text-4xl font-black text-blue-500 mb-0 font-poppins counter" data-target="20">0</span>
+                </div>
+                <span class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">años de
+                    trayectoria</span>
+            </div>
+            <div
+                class="glass-card p-4 py-6 flex flex-col items-center justify-center glow-hover group transition-all duration-500 border-white/5">
+                <div class="flex items-baseline gap-1">
+                    <span class="text-4xl font-black text-blue-500 font-poppins">+</span>
+                    <span class="text-4xl font-black text-blue-500 mb-0 font-poppins counter"
+                        data-target="1500">0</span>
+                </div>
+                <span class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Clientes
+                    potenciados</span>
+            </div>
+            <div
+                class="glass-card p-4 py-6 flex flex-col items-center justify-center glow-hover group transition-all duration-500 border-white/5">
+                <span class="text-4xl font-black text-blue-500 mb-0 font-poppins counter" data-target="7">0</span>
+                <span class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Países</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="unidades" class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="text-left mb-24 max-w-2xl">
+            <span class="section-badge mb-6 reveal">Nuestras
+                Unidades</span>
+            <h2 class="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter">Un ecosistema de innovación
+            </h2>
+            <div class="w-20 h-2 bg-blue-600 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card 1: Tehuentec -->
+            <div class="unit-card reveal">
+                <div class="unit-card-content">
+
+                    <h2 class="unit-card-title">Tehuentec</h2>
+                    <p class="unit-card-description">Agencia de marketing digital con presencia en EE. UU.,
+                        Latinoamérica y España. Más de 20 años transformando marcas e impulsando su crecimiento global.
+                    </p>
+                    <div class="unit-card-link">
+                        <span
+                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></span>
+                    </div>
+                </div>
+                <div class="unit-card-overlay"></div>
+                <img src="assets/unit-tehuentec.jpg" class="unit-card-image" alt="Tehuentec">
+            </div>
+
+            <!-- Card 2: THT Ads -->
+            <div class="unit-card reveal">
+                <div class="unit-card-content">
+
+                    <h2 class="unit-card-title">THT Ads</h2>
+                    <p class="unit-card-description">Especialistas en Google Ads. Proveemos infraestructura y gestión
+                        estratégica para publicidad de afiliados, operando cuentas MCC y líneas de crédito con foco en
+                        escalabilidad y control total.</p>
+                    <div class="unit-card-link">
+                        <span
+                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></span>
+                    </div>
+                </div>
+                <div class="unit-card-overlay"></div>
+                <img src="assets/unit-placeholder.jpg" class="unit-card-image" alt="THT Ads">
+            </div>
+
+            <!-- Card 3: THT Devo -->
+            <div class="unit-card reveal">
+                <div class="unit-card-content">
+
+                    <h2 class="unit-card-title">THT Devo</h2>
+                    <p class="unit-card-description">Desarrollo de software avanzado y arquitectura de agentes con IA.
+                        Soluciones orientadas a la automatización inteligente y la innovación tecnológica disruptiva.
+                    </p>
+                    <div class="unit-card-link">
+                        <span
+                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></span>
+                    </div>
+                </div>
+                <div class="unit-card-overlay"></div>
+                <img src="assets/unit-devo.jpg" class="unit-card-image" alt="THT Devo">
+            </div>
+
+            <!-- Card 4: Trinomium Real state -->
+            <div class="unit-card reveal">
+                <div class="unit-card-content">
+
+                    <h2 class="unit-card-title">Trinomium Real state</h2>
+                    <p class="unit-card-description">Inversión y desarrollo inmobiliario internacional (EE. UU. y
+                        España). Generamos valor patrimonial bajo una sólida visión financiera y estratégica de largo
+                        plazo.</p>
+                    <div class="unit-card-link">
+                        <span
+                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></span>
+                    </div>
+                </div>
+                <div class="unit-card-overlay"></div>
+                <img src="assets/unit-trinomium.jpg" class="unit-card-image" alt="Trinomium Real state">
+            </div>
+
+            <!-- Card 5: Fundación THT -->
+            <div class="unit-card reveal">
+                <div class="unit-card-content">
+
+                    <h2 class="unit-card-title">Fundación THT</h2>
+                    <p class="unit-card-description">Conectamos empresas e instituciones para brindar recursos a
+                        personas en situación de vulnerabilidad. Somos el puente sólido entre la solidaridad e impacto
+                        social real.</p>
+                    <div class="unit-card-link">
+                        <span
+                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></span>
+                    </div>
+                </div>
+                <div class="unit-card-overlay"></div>
+                <img src="assets/unit-fundacion.jpg" class="unit-card-image" alt="Fundación THT">
+            </div>
+
+            <!-- Card 6: Césped en Mendoza -->
+            <div class="unit-card reveal">
+                <div class="unit-card-content">
+
+                    <h2 class="unit-card-title">Césped en Mendoza</h2>
+                    <p class="unit-card-description">Líderes en comercialización de césped premium en la región. Calidad
+                        garantizada y asesoramiento técnico especializado para proyectos paisajísticos de alto nivel.
+                    </p>
+                    <div class="unit-card-link">
+                        <span
+                            class="text-xs font-extrabold text-white uppercase tracking-[0.2em] flex items-center gap-2">Ver
+                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></span>
+                    </div>
+                </div>
+                <div class="unit-card-overlay"></div>
+                <img src="assets/unit-cesped.jpg" class="unit-card-image" alt="Césped en Mendoza">
+            </div>
+        </div>
+    </section>
+
+    <!-- Quienes Somos Section -->
+    <section id="nosotros" class="py-48 px-6 bg-[#030303] relative overflow-hidden">
+        <div class="max-w-[1600px] mx-auto flex flex-col items-center text-center">
+            <span class="section-badge mb-12 reveal">Nuestra visión</span>
+
+            <div class="reveal-container mb-24">
+                <h2 class="huge-title reveal-item active">
+                    Innovación <br>
+                    <div class="flex items-center justify-center gap-6 my-4">
+                        <div class="typo-window">
+                            <img src="assets/vision-poster.png" class="w-full h-full object-cover" alt="Vision Poster">
+                            <div class="play-indicator">
+                                <svg fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <span class="leading-none">con visión</span>
+                    </div>
+                    de futuro
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl text-left mt-20 border-t border-white/5 pt-20">
+                <p class="text-2xl text-gray-300 font-light leading-relaxed">
+                    En <span class="text-white font-bold">THT Corporation</span>, lideramos diversas industrias a través
+                    de la innovación constante y la inversión estratégica en tecnología. Nuestro motor es el desarrollo
+                    del talento humano: creemos que la verdadera transformación nace de la sinergia entre personas,
+                    conocimiento y una visión clara del negocio.
+                </p>
+                <div class="flex flex-col justify-start h-full">
+                    <div class="highlight-card">
+                        <p class="text-3xl text-white font-medium italic leading-tight">
+                            "El futuro pertenece a quienes se atreven a crear y a pensar a largo plazo."
+                        </p>
+                        <p class="text-lg text-gray-500 font-light leading-relaxed mt-6">
+                            Diseñamos soluciones de impacto que acompañan a empresas y profesionales en su evolución,
+                            proyectando juntos un horizonte sólido, sostenible y escalable.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] bg-blue-600/5 blur-[120px] rounded-full -z-10">
+        </div>
+    </section>
+
+    <!-- Viví la experiencia Section [NEW] -->
+    <section id="experiencia" class="py-0 px-0 relative bg-black">
+        <div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 items-start">
+            <!-- Sticky Image Side -->
+            <div class="hidden lg:block h-screen sticky top-0 overflow-hidden bg-black">
+                <img src="assets/team-culture.jpg" alt="Cultura THT"
+                    class="w-full h-full object-cover object-left opacity-90 transition-all duration-700"
+                    id="experience-photo">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent z-10"></div>
+            </div>
+
+            <!-- Scrollable Content Side -->
+            <div class="py-60 px-6 lg:px-20 space-y-[60vh]">
+                <!-- Intro -->
+                <div class="reveal-stagger mb-60">
+                    <span class="section-badge mb-6">Nuestra Cultura</span>
+                    <h2 class="giant-text mb-8">Viví la <br> Cultura <br> THT</h2>
+                    <p class="text-2xl text-gray-500 font-light max-w-lg mb-12">Equipos de alto rendimiento diseñando el
+                        futuro tecnológico.</p>
+                    <div class="flex flex-wrap gap-6">
+                        <a href="#contacto"
+                            class="px-10 py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-500 transition-all text-sm uppercase tracking-widest shadow-[0_10px_30px_rgba(0,102,255,0.3)]">Sumate
+                            al equipo</a>
+                        <a href="#contacto"
+                            class="px-10 py-5 glass-card text-white font-black rounded-2xl hover:bg-white/10 transition-all text-sm uppercase tracking-widest">Cultura
+                            THT</a>
+                    </div>
+                </div>
+
+                <!-- Pillar 1: Autonomía -->
+                <div class="culture-pillar py-20 border-t border-white/10" id="pillar-1">
+                    <div class="text-7xl mb-12 text-blue-500">01</div>
+                    <h3 class="text-6xl font-black mb-8 uppercase tracking-tighter font-poppins">Autonomía</h3>
+                    <p class="text-xl text-gray-400 font-inter max-w-md">Empoderamos a cada líder y equipo para tomar
+                        decisiones de impacto real, fomentando la responsabilidad y el crecimiento individual.</p>
+                </div>
+
+                <!-- Pillar 2: Aprendizaje -->
+                <div class="culture-pillar py-20 border-t border-white/10" id="pillar-2">
+                    <div class="text-7xl mb-12 text-blue-500">02</div>
+                    <h3 class="text-6xl font-black mb-8 uppercase tracking-tighter font-poppins">Aprendizaje</h3>
+                    <p class="text-xl text-gray-400 font-inter max-w-md">La evolución es constante. Promovemos una
+                        cultura de formación continua y curiosidad tecnológica inagotable.</p>
+                </div>
+
+                <!-- Pillar 3: Innovación -->
+                <div class="culture-pillar py-20 border-t border-white/10" id="pillar-3">
+                    <div class="text-7xl mb-12 text-blue-500">03</div>
+                    <h3 class="text-6xl font-black mb-8 uppercase tracking-tighter font-poppins">Innovación</h3>
+                    <p class="text-xl text-gray-400 font-inter max-w-md">No seguimos tendencias, las creamos.
+                        Desarrollamos soluciones disruptivas que desafían lo establecido.</p>
+                </div>
+
+                <!-- Pillar 4: Bienestar -->
+                <div class="culture-pillar py-20 border-t border-white/10" id="pillar-4">
+                    <div class="text-7xl mb-12 text-blue-500">04</div>
+                    <h3 class="text-6xl font-black mb-8 uppercase tracking-tighter font-poppins">Bienestar</h3>
+                    <p class="text-xl text-gray-400 font-inter max-w-md">El talento brilla cuando está en equilibrio.
+                        Priorizamos la salud, la flexibilidad y un ambiente colaborativo sano.</p>
+                </div>
+
+            </div>
+    </section>
+
+    <!-- Values Section (Modern Disruptive ADN) -->
+    <section class="py-60 px-6 relative overflow-hidden bg-black" id="adn-section">
+        <div class="max-w-7xl mx-auto">
+            <span class="section-badge mb-12 reveal">Nuestro Espíritu</span>
+
+            <div class="space-y-20">
+                <div class="reveal-container">
+                    <h2 class="giant-text reveal-item active" data-value="agilidad">Agilidad</h2>
+                </div>
+                <div class="reveal-container">
+                    <h2 class="giant-text reveal-item" data-value="excelencia">Excelencia</h2>
+                </div>
+                <div class="reveal-container">
+                    <h2 class="giant-text reveal-item" data-value="integridad">Integridad</h2>
+                </div>
+                <div class="reveal-container">
+                    <h2 class="giant-text reveal-item" data-value="pasion">Pasión</h2>
+                </div>
+            </div>
+
+            <div class="mt-60 max-w-5xl">
+                <p class="text-4xl md:text-7xl font-light leading-tight text-gray-800" id="scrub-phrase">
+                    <span class="scroll-reveal-text">Modelamos</span>
+                    <span class="scroll-reveal-text">el</span>
+                    <span class="scroll-reveal-text">presente</span>
+                    <span class="scroll-reveal-text">para</span>
+                    <span class="scroll-reveal-text">dominar</span>
+                    <span class="scroll-reveal-text">el</span>
+                    <span class="scroll-reveal-text">mañana.</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Background decorative element -->
+        <div class="absolute -bottom-1/4 -right-1/4 w-[800px] h-[800px] bg-blue-600/5 blur-[150px] rounded-full -z-10">
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-40 px-6 bg-black relative">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center">
+            <div class="md:w-1/2">
+                <span class="section-badge mb-6">Comunicate</span>
+                <h2 class="text-5xl md:text-7xl font-black mb-12 tracking-tighter">Hablemos de futuro</h2>
+                <div class="space-y-12">
+                    <div class="flex gap-6 items-center">
+                        <div
+                            class="h-16 w-16 bg-blue-600/10 rounded-2xl flex items-center justify-center text-blue-500 text-2xl">
+                            📧</div>
+                        <div>
+                            <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">Escribinos</p>
+                            <p class="text-2xl font-bold">contacto@thtcorporation.com</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-8">
+                        <div class="flex items-center gap-3">
+                            <img src="https://flagcdn.com/w80/us.png" alt="USA" class="flag-circle">
+                            <span class="font-bold">USA</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <img src="https://flagcdn.com/w80/es.png" alt="España" class="flag-circle">
+                            <span class="font-bold">Spain</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <img src="https://flagcdn.com/w80/ar.png" alt="Argentina" class="flag-circle">
+                            <span class="font-bold">Argentina</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <img src="https://flagcdn.com/w80/cl.png" alt="Chile" class="flag-circle">
+                            <span class="font-bold">Chile</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-1/2 w-full">
+                <div class="glass-card p-12 border-white/5">
+                    <form class="space-y-8">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-gray-500">Nombre</label>
+                                <input type="text"
+                                    class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-blue-500 outline-none transition-all"
+                                    placeholder="Tu nombre">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-gray-500">Email</label>
+                                <input type="email"
+                                    class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-blue-500 outline-none transition-all"
+                                    placeholder="vos@email.com">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-gray-500">Mensaje</label>
+                            <textarea rows="4"
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-blue-500 outline-none transition-all"
+                                placeholder="¿Cómo podemos ayudarte?"></textarea>
+                        </div>
+                        <button
+                            class="w-full py-5 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl transition-all uppercase tracking-[0.2em] text-sm shadow-[0_10px_30px_rgba(0,102,255,0.3)]">
+                            Enviar mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-24 px-6 border-t border-white/5 bg-[#030303] relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-20 mb-20">
+                <div class="max-w-md">
+                    <div class="flex items-center mb-10">
+                        <img src="assets/logo-main.png" alt="THT Corporation" class="h-16 w-auto">
+                    </div>
+                    <p class="text-gray-500 text-lg mb-6 leading-relaxed font-light">
+                        Somos pioneros en la industria digital, y nuestro know-how es el resultado de dos décadas de
+                        experiencia, dedicación y evolución constante.
+                    </p>
+                    <p class="text-gray-500 text-lg mb-10 leading-relaxed font-light">
+                        THT Corporation es un ecosistema donde la sinergia entre nuestras marcas genera un valor que va
+                        más allá de lo convencional.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-12 h-12 rounded-xl glass-card flex items-center justify-center hover:bg-blue-600 transition-all border-white/10 text-xl">in</a>
+                        <a href="#"
+                            class="w-12 h-12 rounded-xl glass-card flex items-center justify-center hover:bg-blue-600 transition-all border-white/10 text-xl">ig</a>
+                        <a href="#"
+                            class="w-12 h-12 rounded-xl glass-card flex items-center justify-center hover:bg-blue-600 transition-all border-white/10 text-xl">fb</a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-20 lg:gap-32">
+                    <!-- Column 1: Contáctanos -->
+                    <div class="flex flex-col gap-8">
+                        <span class="font-black text-xs uppercase tracking-[0.4em] text-blue-500">Contáctanos</span>
+                        <div class="space-y-6">
+                            <a href="https://wa.me/5492612712289" target="_blank"
+                                class="flex items-center gap-4 text-gray-500 hover:text-white transition-colors group">
+                                <span class="text-xl"></span>
+                                <span class="text-lg font-medium">+54 9 2612712289</span>
+                            </a>
+                            <a href="mailto:info@thtcorporation.com"
+                                class="flex items-center gap-4 text-gray-500 hover:text-white transition-colors group">
+                                <span class="text-xl">✉</span>
+                                <span class="text-lg font-medium">info@thtcorporation.com</span>
+                            </a>
+                            <div class="flex items-start gap-4 text-gray-500">
+                                <span class="text-xl mt-1"></span>
+                                <p class="text-base leading-relaxed font-light">
+                                    Workplace Palmares<br>
+                                    Ruta Panamericana 2650,<br>
+                                    Godoy Cruz, Mendoza, Argentina.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Caso de Éxito -->
+                    <div class="flex flex-col gap-8">
+                        <span class="font-black text-xs uppercase tracking-[0.4em] text-blue-500">Caso de Éxito</span>
+                        <div class="flex flex-col gap-4">
+                            <a href="#"
+                                class="text-gray-500 hover:text-white transition-colors text-lg font-medium">Institucional</a>
+                            <a href="#"
+                                class="text-gray-500 hover:text-white transition-colors text-lg font-medium">Empresas</a>
+                            <a href="#"
+                                class="text-gray-500 hover:text-white transition-colors text-lg font-medium">Talento
+                                Humano</a>
+                            <a href="#contacto"
+                                class="text-gray-500 hover:text-white transition-colors text-lg font-medium">Contacto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700 text-xs font-bold uppercase tracking-widest text-center">
+                <p>Diseño y desarrollo web realizado por Tehuentec by THT Corporation</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+
+        // Netflix-style Typographic Reveals (ADN)
+        gsap.utils.toArray('.reveal-container').forEach((container, i) => {
+            const item = container.querySelector('.reveal-item');
+            gsap.to(item, {
+                y: 0,
+                duration: 1.5,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: container,
+                    start: "top 85%",
+                    onEnter: () => item.classList.add('active'),
+                    onLeaveBack: () => item.classList.remove('active'),
+                }
+            });
+        });
+
+        // Text Scrub Animation (Spirit Phrase)
+        const scrubWords = document.querySelectorAll('.scroll-reveal-text');
+        gsap.to(scrubWords, {
+            scrollTrigger: {
+                trigger: "#scrub-phrase",
+                start: "top 70%",
+                end: "top 20%",
+                scrub: true,
+            },
+            opacity: 1,
+            color: "#fff",
+            fontWeight: "900",
+            stagger: 0.1,
+            duration: 1
+        });
+
+        // Experience Sticky Photo & Pillars
+        const pillars = document.querySelectorAll('.culture-pillar');
+        const photo = document.querySelector('#experience-photo');
+
+        pillars.forEach((pillar, i) => {
+            ScrollTrigger.create({
+                trigger: pillar,
+                start: "top 50%",
+                end: "bottom 50%",
+                onEnter: () => {
+                    pillar.classList.add('active');
+                    // Change photo state based on pillar
+                    gsap.to(photo, {
+                        filter: `brightness(${0.7 + (i * 0.1)})`,
+                        scale: 1 + (i * 0.02),
+                        duration: 1.5,
+                        ease: "power2.inOut"
+                    });
+                },
+                onLeaveBack: () => {
+                    pillar.classList.remove('active');
+                }
+            });
+        });
+
+        // Staggered reveals for headers and containers
+        const revealStaggers = document.querySelectorAll('.reveal-stagger');
+        revealStaggers.forEach(container => {
+            gsap.to(container.children, {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                stagger: 0.2,
+                ease: 'expo.out',
+                scrollTrigger: {
+                    trigger: container,
+                    start: 'top 90%',
+                    toggleActions: "play none none reverse"
+                }
+            });
+            // Also reveal the container itself if it has opacity classes
+            gsap.to(container, { opacity: 1, y: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: container, start: 'top 95%' } });
+        });
+
+        // Typo Window Reveal
+        gsap.from('.typo-window', {
+            scrollTrigger: {
+                trigger: '.typo-window',
+                start: "top 85%",
+            },
+            width: 0,
+            opacity: 0,
+            duration: 1.5,
+            ease: "expo.out"
+        });
+
+        // General reveals
+        gsap.utils.toArray('.reveal').forEach(el => {
+            gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                ease: 'expo.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 90%',
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Counter Animation for Metrics
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            gsap.to(counter, {
+                innerText: target,
+                duration: 2,
+                snap: { innerText: 1 },
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: counter,
+                    start: "top 90%",
+                }
+            });
+        });
+
+        // Parallax Background
+        gsap.to('.mesh-bg', {
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 2
+            },
+            y: 200,
+            scale: 1.2,
+            opacity: 0.4
+        });
+
+        // Video Control
+        const video = document.getElementById('inst-video');
+        const playOverlay = document.getElementById('play-overlay');
+
+        function toggleVideo() {
+            if (video.paused) {
+                video.play();
+                video.muted = false;
+                playOverlay.style.opacity = '0';
+                setTimeout(() => playOverlay.style.display = 'none', 300);
+                video.style.opacity = '1';
+            } else {
+                video.pause();
+                playOverlay.style.display = 'flex';
+                setTimeout(() => playOverlay.style.opacity = '1', 10);
+                video.style.opacity = '0.7';
+            }
+        }
+
+        playOverlay.addEventListener('click', toggleVideo);
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
