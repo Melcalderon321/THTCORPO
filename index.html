@@ -126,6 +126,15 @@
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        .unit-card-logo {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: left center;
+        }
+
+        .unit-card:hover .unit-card-logo {
+            transform: scale(1.05);
+        }
+
         .unit-card-description {
             font-size: 1rem;
             font-weight: 500;
@@ -523,7 +532,7 @@
             <div
                 class="glass-card p-4 py-6 flex flex-col items-center justify-center glow-hover group transition-all duration-500 border-white/5">
                 <div class="flex items-baseline gap-1">
-                    <span class="text-4xl font-black text-blue-500 mb-0 font-poppins counter" data-target="20">0</span>
+                    <span class="text-4xl font-bold text-blue-500 mb-0 font-poppins counter" data-target="20">0</span>
                 </div>
                 <span class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">años de
                     trayectoria</span>
@@ -531,16 +540,15 @@
             <div
                 class="glass-card p-4 py-6 flex flex-col items-center justify-center glow-hover group transition-all duration-500 border-white/5">
                 <div class="flex items-baseline gap-1">
-                    <span class="text-4xl font-black text-blue-500 font-poppins">+</span>
-                    <span class="text-4xl font-black text-blue-500 mb-0 font-poppins counter"
-                        data-target="1500">0</span>
+                    <span class="text-4xl font-bold text-blue-500 font-poppins">+</span>
+                    <span class="text-4xl font-bold text-blue-500 mb-0 font-poppins counter" data-target="1500">0</span>
                 </div>
                 <span class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Clientes
                     potenciados</span>
             </div>
             <div
                 class="glass-card p-4 py-6 flex flex-col items-center justify-center glow-hover group transition-all duration-500 border-white/5">
-                <span class="text-4xl font-black text-blue-500 mb-0 font-poppins counter" data-target="7">0</span>
+                <span class="text-4xl font-bold text-blue-500 mb-0 font-poppins counter" data-target="7">0</span>
                 <span class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Países</span>
             </div>
         </div>
@@ -560,7 +568,8 @@
             <div class="unit-card reveal" onclick="window.location.href='tehuentec.html'">
                 <div class="unit-card-content">
 
-                    <h2 class="unit-card-title">Tehuentec</h2>
+                    <img src="assets/logo-tehuentec-card.png" alt="Tehuentec"
+                        class="h-14 w-auto mb-6 self-start object-contain unit-card-logo">
                     <p class="unit-card-description">Agencia de marketing digital con presencia en EE. UU.,
                         Latinoamérica y España. Más de 20 años transformando marcas e impulsando su crecimiento global.
                     </p>
@@ -581,7 +590,8 @@
             <div class="unit-card reveal">
                 <div class="unit-card-content">
 
-                    <h2 class="unit-card-title">THT Ads</h2>
+                    <img src="assets/logo-tht-ads-card.png" alt="THT Ads"
+                        class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
                     <p class="unit-card-description">Especialistas en Google Ads. Proveemos infraestructura y gestión
                         estratégica para publicidad de afiliados, operando cuentas MCC y líneas de crédito con foco en
                         escalabilidad y control total.</p>
@@ -602,7 +612,8 @@
             <div class="unit-card reveal">
                 <div class="unit-card-content">
 
-                    <h2 class="unit-card-title">THT Devo</h2>
+                    <img src="assets/logo-tht-devo-card.png" alt="THT Devo"
+                        class="h-9 w-auto mb-6 self-start object-contain unit-card-logo">
                     <p class="unit-card-description">Desarrollo de software avanzado y arquitectura de agentes con IA.
                         Soluciones orientadas a la automatización inteligente y la innovación tecnológica disruptiva.
                     </p>
@@ -623,7 +634,8 @@
             <div class="unit-card reveal">
                 <div class="unit-card-content">
 
-                    <h2 class="unit-card-title">Trinomium Real state</h2>
+                    <img src="assets/logo-trinomium-card.png" alt="Trinomium Real State"
+                        class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
                     <p class="unit-card-description">Inversión y desarrollo inmobiliario internacional (EE. UU. y
                         España). Generamos valor patrimonial bajo una sólida visión financiera y estratégica de largo
                         plazo.</p>
@@ -644,7 +656,8 @@
             <div class="unit-card reveal">
                 <div class="unit-card-content">
 
-                    <h2 class="unit-card-title">Fundación THT</h2>
+                    <img src="assets/logo-fundacion-card.png" alt="Fundación THT"
+                        class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
                     <p class="unit-card-description">Conectamos empresas e instituciones para brindar recursos a
                         personas en situación de vulnerabilidad. Somos el puente sólido entre la solidaridad e impacto
                         social real.</p>
@@ -665,7 +678,8 @@
             <div class="unit-card reveal">
                 <div class="unit-card-content">
 
-                    <h2 class="unit-card-title">Césped en Mendoza</h2>
+                    <img src="assets/logo-cesped-card.png" alt="Césped en Mendoza"
+                        class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
                     <p class="unit-card-description">Líderes en comercialización de césped premium en la región. Calidad
                         garantizada y asesoramiento técnico especializado para proyectos paisajísticos de alto nivel.
                     </p>
@@ -850,15 +864,7 @@
                 <p class="text-xl text-gray-500 font-light mb-12">Déjanos tu mensaje y nos pondremos en contacto a la
                     brevedad.</p>
                 <div class="space-y-12">
-                    <div class="flex gap-6 items-center">
-                        <div
-                            class="h-16 w-16 bg-blue-600/10 rounded-2xl flex items-center justify-center text-blue-500 text-2xl">
-                            📧</div>
-                        <div>
-                            <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">Escribinos</p>
-                            <p class="text-xl font-normal">contacto@thtcorporation.com</p>
-                        </div>
-                    </div>
+
                     <div class="flex flex-wrap gap-8">
                         <div class="flex items-center gap-3">
                             <img src="https://flagcdn.com/w80/us.png" alt="USA" class="flag-circle">
@@ -884,26 +890,27 @@
                     <form class="space-y-8">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div class="space-y-2">
-                                <label class="text-xs font-black uppercase tracking-widest text-gray-500">Nombre</label>
+                                <label
+                                    class="text-xs font-medium uppercase tracking-widest text-gray-500">Nombre</label>
                                 <input type="text"
                                     class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-blue-500 outline-none transition-all"
                                     placeholder="Tu nombre">
                             </div>
                             <div class="space-y-2">
-                                <label class="text-xs font-black uppercase tracking-widest text-gray-500">Email</label>
+                                <label class="text-xs font-medium uppercase tracking-widest text-gray-500">Email</label>
                                 <input type="email"
                                     class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-blue-500 outline-none transition-all"
                                     placeholder="vos@email.com">
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-black uppercase tracking-widest text-gray-500">Mensaje</label>
+                            <label class="text-xs font-medium uppercase tracking-widest text-gray-500">Mensaje</label>
                             <textarea rows="4"
                                 class="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 focus:border-blue-500 outline-none transition-all"
                                 placeholder="¿Cómo podemos ayudarte?"></textarea>
                         </div>
                         <button type="submit"
-                            class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-xl transition-all shadow-lg hover:shadow-blue-600/30 tracking-widest">
+                            class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-4 rounded-xl transition-all shadow-lg hover:shadow-blue-600/30 tracking-widest">
                             Enviar mensaje
                         </button>
                     </form>
