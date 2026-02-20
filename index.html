@@ -119,7 +119,7 @@
 
         .unit-card-title {
             font-size: 2.25rem;
-            font-weight: 900;
+            font-weight: 700;
             line-height: 1.1;
             margin-bottom: 2rem;
             color: #fff;
@@ -128,7 +128,7 @@
 
         .unit-card-description {
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 500;
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             margin-bottom: 2rem;
@@ -194,19 +194,21 @@
         .giant-text {
             font-size: clamp(2.5rem, 8vw, 7.5rem);
             font-weight: 700;
-            line-height: 1.0;
+            line-height: 1.1;
+            /* Increased from 1.0 to prevent clipping */
             letter-spacing: 0;
             text-transform: uppercase;
             color: transparent;
-            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.4);
-            /* Increased to 2px */
+            -webkit-text-stroke: 2px #ffffff;
+            /* Pure white stroke */
+            padding: 0.1em 0;
+            /* Added padding to prevent accent/stroke clipping */
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* Removed active fill state as per user preference */
         .giant-text.active {
             -webkit-text-stroke: 3px #fff;
-            /* Increased to 3px */
         }
 
         .scroll-reveal-text {
@@ -217,10 +219,13 @@
         .huge-title {
             font-size: clamp(3rem, 9vw, 8.5rem);
             font-weight: 700;
-            line-height: 0.9;
+            line-height: 1.1;
+            /* Increased from 0.9 to prevent clipping */
             letter-spacing: 0;
             text-transform: uppercase;
             text-align: center;
+            padding: 0.1em 0;
+            /* Added vertical padding */
             color: #fff;
         }
 
@@ -258,15 +263,15 @@
 
         .highlight-card {
             padding: 2rem;
-            border: 1px solid var(--glass-border);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-left: 4px solid #3b82f6;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-radius: 0 1.5rem 1.5rem 0;
             position: relative;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.05);
         }
 
         .highlight-card:hover {
@@ -295,6 +300,8 @@
 
         .reveal-item {
             transform: translateY(100%);
+            padding: 0.1em 0;
+            /* Added padding to avoid clipping top/bottom parts of text */
             transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -379,13 +386,68 @@
             opacity: 0;
             transform: translateY(20px);
         }
+
+        /* Footer Background & Geometric Wings */
+        .footer-bg-wrapper {
+            background: linear-gradient(to bottom, #003399 0%, #050a1f 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-bg-wrapper::before,
+        .footer-bg-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 40%;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.2) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .footer-bg-wrapper::before {
+            left: 0;
+            clip-path: polygon(0 100%, 0 0, 100% 100%);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bg-wrapper::after {
+            right: 0;
+            background: linear-gradient(-135deg, rgba(0, 102, 255, 0.2) 0%, transparent 60%);
+            clip-path: polygon(0 100%, 100% 0, 100% 100%);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-wing-accent {
+            position: absolute;
+            bottom: 0;
+            width: 30%;
+            height: 60px;
+            background: #001a4d;
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .left-wing {
+            left: 0;
+            clip-path: polygon(0 100%, 100% 100%, 0 0);
+        }
+
+        .right-wing {
+            right: 0;
+            clip-path: polygon(0 100%, 100% 100%, 100% 0);
+        }
     </style>
 </head>
 
 <body>
     <div class="mesh-bg"></div>
-    <div class="absolute inset-0 z-0 opacity-50">
-        <img src="assets/hero-bg.jpg" class="w-full h-full object-cover" alt="Background">
+    <div class="absolute inset-0 z-0">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+            <source src="assets/hero-video-custom.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black/40"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black"></div>
     </div>
 
@@ -397,19 +459,14 @@
         <div class="flex items-center">
             <img src="assets/logo-main.png" alt="THT Corporation" class="h-10 w-auto">
         </div>
-        <nav class="hidden md:flex gap-8 items-center font-medium text-sm">
-            <a href="#inicio" class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Inicio</a>
-            <a href="#unidades"
-                class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Institucional</a>
-            <a href="#experiencia"
-                class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Empresas</a>
-            <a href="#experiencia"
-                class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Talento
-                humano</a>
+        <nav class="hidden md:flex gap-8 items-center font-inter font-medium text-sm">
+            <a href="#inicio" class="hover:text-blue-500 transition-colors">Inicio</a>
+            <a href="#unidades" class="hover:text-blue-500 transition-colors">Institucional</a>
+            <a href="#experiencia" class="hover:text-blue-500 transition-colors">Empresas</a>
+            <a href="#experiencia" class="hover:text-blue-500 transition-colors">Talento humano</a>
+            <a href="#contacto" class="hover:text-blue-500 transition-colors">Contacto</a>
             <a href="#contacto"
-                class="hover:text-blue-500 transition-colors tracking-widest text-xs font-bold">Contacto</a>
-            <a href="#contacto"
-                class="ml-4 px-6 py-2.5 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-500 transition-all text-xs tracking-widest shadow-[0_5px_15px_rgba(0,102,255,0.3)]">Contáctanos</a>
+                class="ml-4 px-6 py-2.5 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 transition-all shadow-[0_10px_30px_rgba(0,102,255,0.15)] hover:scale-105">Contáctanos</a>
         </nav>
         <button class="md:hidden text-white">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -420,42 +477,49 @@
 
     <!-- Hero Section -->
     <section id="inicio"
-        class="min-h-screen pt-24 pb-12 px-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+        class="min-h-screen pt-20 pb-8 px-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
         <div
             class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full -z-10">
         </div>
 
         <div class="max-w-5xl w-full mx-auto relative z-10" id="hero-content">
-            <span class="section-badge mb-6 opacity-0 translate-y-4 reveal mx-auto">
+            <!-- Logo added here -->
+            <img src="assets/THT-blanco.png" alt="THT Logo"
+                class="h-16 w-auto mx-auto mb-6 opacity-0 translate-y-4 reveal">
+
+            <span class="section-badge mb-4 opacity-0 translate-y-4 reveal mx-auto">
                 Holding tecnológico
             </span>
             <h1
-                class="text-5xl md:text-8xl font-bold mb-4 leading-[1.05] opacity-0 translate-y-8 reveal tracking-normal text-center">
+                class="text-5xl md:text-7xl font-bold mb-4 leading-[1.05] opacity-0 translate-y-8 reveal tracking-normal text-center">
                 <span class="text-white">20 años</span> <br class="md:hidden"> <span class="text-blue-500">impulsando
                     la innovación global</span>
             </h1>
-            <p class="text-white max-w-2xl mx-auto mb-8 opacity-0 translate-y-8 reveal text-lg text-center">
+            <p class="text-white max-w-2xl mx-auto mb-6 opacity-0 translate-y-8 reveal text-lg text-center">
                 Lideramos la transformación empresarial a través de tecnología propia y equipos de alto rendimiento en
                 EE.UU, España, Argentina, Chile y Latam.
             </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center opacity-0 translate-y-8 reveal items-center">
+            <div
+                class="flex flex-col sm:flex-row gap-4 justify-center opacity-0 translate-y-8 reveal items-center font-inter font-medium">
                 <a href="#unidades"
-                    class="px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl transition-all shadow-[0_10px_30px_rgba(0,102,255,0.3)] hover:scale-105 tracking-widest text-sm text-center">
-                    Conocé más
+                    class="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl transition-all shadow-[0_10px_30px_rgba(0,102,255,0.2)] hover:scale-105 flex items-center justify-center gap-2">
+                    Conocé nuestras empresas
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
                 </a>
                 <a href="#nosotros"
-                    class="px-10 py-5 glass-card hover:bg-white/10 font-black rounded-2xl transition-all flex items-center justify-center gap-3 tracking-widest text-sm">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                    </svg>
-                    Ver video
+                    class="px-8 py-4 border border-blue-500 text-white rounded-2xl hover:bg-blue-500/10 transition-all flex items-center justify-center gap-2">
+                    <img src="assets/play-icon-custom.png" alt="Play" class="w-5 h-5 object-contain">
+                    Ver video institucional
                 </a>
             </div>
         </div>
 
         <!-- Metrics -->
         <div
-            class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto w-full px-6 opacity-0 translate-y-12 reveal-stagger">
+            class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto w-full px-6 opacity-0 translate-y-12 reveal-stagger">
             <div
                 class="glass-card p-4 py-6 flex flex-col items-center justify-center glow-hover group transition-all duration-500 border-white/5">
                 <div class="flex items-baseline gap-1">
@@ -493,7 +557,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Card 1: Tehuentec -->
-            <div class="unit-card reveal">
+            <div class="unit-card reveal" onclick="window.location.href='tehuentec.html'">
                 <div class="unit-card-content">
 
                     <h2 class="unit-card-title">Tehuentec</h2>
@@ -501,7 +565,7 @@
                         Latinoamérica y España. Más de 20 años transformando marcas e impulsando su crecimiento global.
                     </p>
                     <div class="unit-card-link">
-                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -522,7 +586,7 @@
                         estratégica para publicidad de afiliados, operando cuentas MCC y líneas de crédito con foco en
                         escalabilidad y control total.</p>
                     <div class="unit-card-link">
-                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -543,7 +607,7 @@
                         Soluciones orientadas a la automatización inteligente y la innovación tecnológica disruptiva.
                     </p>
                     <div class="unit-card-link">
-                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -564,7 +628,7 @@
                         España). Generamos valor patrimonial bajo una sólida visión financiera y estratégica de largo
                         plazo.</p>
                     <div class="unit-card-link">
-                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -585,7 +649,7 @@
                         personas en situación de vulnerabilidad. Somos el puente sólido entre la solidaridad e impacto
                         social real.</p>
                     <div class="unit-card-link">
-                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -606,7 +670,7 @@
                         garantizada y asesoramiento técnico especializado para proyectos paisajísticos de alto nivel.
                     </p>
                     <div class="unit-card-link">
-                        <span class="text-xs font-extrabold text-white tracking-[0.2em] flex items-center gap-2">Ver
+                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
                             más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -688,12 +752,17 @@
                     <h2 class="giant-text mb-8">Viví la <br> Cultura <br> THT</h2>
                     <p class="text-2xl text-gray-500 font-light max-w-lg mb-12">Equipos de alto rendimiento diseñando el
                         futuro tecnológico.</p>
-                    <div class="flex flex-wrap gap-6">
+                    <div class="flex flex-wrap gap-6 font-inter font-medium">
                         <a href="#contacto"
-                            class="px-10 py-5 bg-blue-600 text-white font-black rounded-2xl hover:bg-blue-500 transition-all text-sm tracking-widest shadow-[0_10px_30px_rgba(0,102,255,0.3)]">Sumate
-                            al equipo</a>
+                            class="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl transition-all shadow-[0_10px_30px_rgba(0,102,255,0.2)] hover:scale-105 flex items-center justify-center gap-2">Sumate
+                            al equipo
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
                         <a href="#contacto"
-                            class="px-10 py-5 glass-card text-white font-black rounded-2xl hover:bg-white/10 transition-all text-sm tracking-widest">Cultura
+                            class="px-8 py-4 border border-blue-500 text-white rounded-2xl hover:bg-blue-500/10 transition-all flex items-center justify-center gap-2">Cultura
                             THT</a>
                     </div>
                 </div>
@@ -734,7 +803,7 @@
     </section>
 
     <!-- Values Section (Modern Disruptive ADN) -->
-    <section class="py-60 px-6 relative overflow-hidden bg-black" id="adn-section">
+    <section class="py-40 px-6 relative overflow-hidden bg-black" id="adn-section">
         <div class="max-w-7xl mx-auto">
             <span class="section-badge mb-12 reveal">Nuestro Espíritu</span>
 
@@ -753,8 +822,9 @@
                 </div>
             </div>
 
-            <div class="mt-60 max-w-5xl">
-                <p class="text-4xl md:text-7xl font-light leading-tight text-gray-800" id="scrub-phrase">
+            <div class="mt-20 max-w-5xl">
+                <p class="text-4xl md:text-7xl font-light text-gray-800" id="scrub-phrase"
+                    style="line-height: 1.2 !important;">
                     <span class="scroll-reveal-text">Modelamos</span>
                     <span class="scroll-reveal-text">el</span>
                     <span class="scroll-reveal-text">presente</span>
@@ -775,8 +845,10 @@
     <section id="contacto" class="py-40 px-6 bg-black relative">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center">
             <div class="md:w-1/2">
-                <span class="section-badge mb-6">Comunicate</span>
-                <h2 class="text-5xl md:text-7xl font-bold mb-12 tracking-normal">Hablemos de futuro</h2>
+                <span class="section-badge mb-6">Contacto</span>
+                <h2 class="text-4xl md:text-6xl font-bold mb-6 tracking-normal">Comunícate con THT Corporation</h2>
+                <p class="text-xl text-gray-500 font-light mb-12">Déjanos tu mensaje y nos pondremos en contacto a la
+                    brevedad.</p>
                 <div class="space-y-12">
                     <div class="flex gap-6 items-center">
                         <div
@@ -794,7 +866,7 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <img src="https://flagcdn.com/w80/es.png" alt="España" class="flag-circle">
-                            <span class="font-bold">Spain</span>
+                            <span class="font-bold">España</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <img src="https://flagcdn.com/w80/ar.png" alt="Argentina" class="flag-circle">
@@ -841,9 +913,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-20 px-6 bg-[#003399] relative text-white font-poppins text-center md:text-left">
+    <footer class="py-20 px-6 footer-bg-wrapper relative text-white font-poppins text-center md:text-left">
+        <div class="footer-wing-accent left-wing"></div>
+        <div class="footer-wing-accent right-wing"></div>
+
         <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 items-center justify-items-center text-left">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 items-start justify-items-center text-left">
 
                 <!-- Column 1: Description -->
                 <div class="space-y-6">
@@ -896,19 +971,12 @@
                                 <path
                                     d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                             </svg></a>
-                        <a href="#" class="hover:text-blue-200 transition-colors"><svg class="w-5 h-5" fill="none"
-                                stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M7.8 2h8.4C19.4 2 22 4.4 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.4 22 2 19.4 2 16V7.8A5.8 5.8 0 017.8 2m0 2a3.8 3.8 0 00-3.8 3.8v8.4a3.8 3.8 0 003.8 3.8h8.4a3.8 3.8 0 003.8-3.8V7.8A3.8 3.8 0 0016.2 4H7.8z">
-                                </path>
-                            </svg></a>
-                        <a href="#" class="hover:text-blue-200 transition-colors"><svg class="w-5 h-5"
-                                fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                            </svg></a>
+                        <a href="#" class="hover:text-blue-200 transition-colors flex items-center">
+                            <img src="assets/icon-instagram.png" alt="Instagram" class="w-5 h-5 object-contain">
+                        </a>
+                        <a href="#" class="hover:text-blue-200 transition-colors flex items-center">
+                            <img src="assets/icon-facebook.png" alt="Facebook" class="w-5 h-5 object-contain">
+                        </a>
                     </div>
                 </div>
 
