@@ -117,6 +117,90 @@
             font-family: 'Inter', sans-serif;
         }
 
+        /* Carousel container styles */
+        .carousel-container {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            padding: 10px 0;
+        }
+        
+        .carousel-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+        
+        .carousel-item-wrapper {
+            flex: 0 0 85%;
+            scroll-snap-align: start;
+        }
+        
+        @media (min-width: 768px) {
+            .carousel-item-wrapper {
+                flex: 0 0 45%;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .carousel-item-wrapper {
+                flex: 0 0 30%;
+            }
+        }
+
+        /* Carousel Navigation Buttons */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 50; /* Aumentado para pasar por encima de las tarjetas con reveals */
+            pointer-events: auto; /* Asegura recepción de clicks */
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .carousel-arrow:hover {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+            scale: 1.05;
+        }
+
+        .carousel-arrow:active {
+            scale: 0.95;
+        }
+
+        .carousel-arrow.prev {
+            left: 10px;
+        }
+
+        .carousel-arrow.next {
+            right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-arrow {
+                display: none; /* Hide on mobile to avoid overlap */
+            }
+        }
+
         .unit-card-title {
             font-size: 2.25rem;
             font-weight: 700;
@@ -501,12 +585,10 @@
             </span>
             <h1
                 class="text-5xl md:text-7xl font-bold mb-4 leading-[1.05] opacity-0 translate-y-8 reveal tracking-normal text-center">
-                <span class="text-white">20 años</span> <br class="md:hidden"> <span class="text-blue-500">impulsando
-                    la innovación global</span>
+                <span class="text-white">Tecnología, Inversión</span> <br class="md:hidden"> <span class="text-blue-500">y Crecimiento Sostenible</span>
             </h1>
             <p class="text-white max-w-2xl mx-auto mb-6 opacity-0 translate-y-8 reveal text-lg text-center">
-                Lideramos la transformación empresarial a través de tecnología propia y equipos de alto rendimiento en
-                EE.UU, España, Argentina, Chile y Latam.
+                Desarrollamos y gestionamos unidades de negocio de alto impacto en marketing digital, tecnología e inversión inmobiliaria internacional.
             </p>
             <div
                 class="flex flex-col sm:flex-row gap-4 justify-center opacity-0 translate-y-8 reveal items-center font-inter font-medium">
@@ -554,7 +636,7 @@
         </div>
     </section>
 
-    <section id="unidades" class="py-32 px-6 max-w-7xl mx-auto">
+    <section id="unidades" class="py-32 px-6 w-full max-w-[1600px] mx-auto overflow-hidden">
         <div class="text-left mb-24 max-w-2xl">
             <span class="section-badge mb-6 reveal">Nuestras
                 Unidades</span>
@@ -563,138 +645,136 @@
             <div class="w-20 h-2 bg-blue-600 rounded-full"></div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Card 1: Tehuentec -->
-            <div class="unit-card reveal" onclick="window.location.href='tehuentec.html'">
-                <div class="unit-card-content">
+        <div class="carousel-wrapper reveal">
+            <!-- Left Arrow -->
+            <button class="carousel-arrow prev" id="carousel-prev" aria-label="Anterior">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
 
-                    <img src="assets/logo-tehuentec-card.png" alt="Tehuentec"
-                        class="h-14 w-auto mb-6 self-start object-contain unit-card-logo">
-                    <p class="unit-card-description">Agencia de marketing digital con presencia en EE. UU.,
-                        Latinoamérica y España. Más de 20 años transformando marcas e impulsando su crecimiento global.
-                    </p>
-                    <div class="unit-card-link">
-                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
-                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg></span>
+            <div class="carousel-container" id="units-carousel">
+                <div class="carousel-item-wrapper">
+                    <div class="unit-card h-[550px]" onclick="window.location.href='tehuentec.html'">
+                        <div class="unit-card-content">
+                            <img src="assets/logo-tehuentec-card.png" alt="Tehuentec"
+                                class="h-14 w-auto mb-6 self-start object-contain unit-card-logo">
+                            <p class="unit-card-description">Agencia de marketing digital con presencia en EE. UU.,
+                                Latinoamérica y España. Más de 20 años transformando marcas e impulsando su crecimiento global.
+                            </p>
+                            <div class="unit-card-link">
+                                <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
+                                    más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg></span>
+                            </div>
+                        </div>
+                        <div class="unit-card-overlay"></div>
+                        <img src="assets/unit-tehuentec.webp" class="unit-card-image" alt="Tehuentec">
                     </div>
                 </div>
-                <div class="unit-card-overlay"></div>
-                <img src="assets/unit-tehuentec.jpg" class="unit-card-image" alt="Tehuentec">
-            </div>
 
-            <!-- Card 2: THT Ads -->
-            <div class="unit-card reveal">
-                <div class="unit-card-content">
-
-                    <img src="assets/logo-tht-ads-card.png" alt="THT Ads"
-                        class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
-                    <p class="unit-card-description">Especialistas en Google Ads. Proveemos infraestructura y gestión
-                        estratégica para publicidad de afiliados, operando cuentas MCC y líneas de crédito con foco en
-                        escalabilidad y control total.</p>
-                    <div class="unit-card-link">
-                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
-                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg></span>
+                <!-- Card 2: THT Ads -->
+                <div class="carousel-item-wrapper">
+                    <div class="unit-card h-[550px]">
+                        <div class="unit-card-content">
+                            <img src="assets/logo-tht-ads-card.png" alt="THT Ads"
+                                class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
+                            <p class="unit-card-description">Especialistas en Google Ads. Proveemos infraestructura y gestión
+                                estratégica para publicidad de afiliados, operando cuentas MCC y líneas de crédito con foco en
+                                escalabilidad y control total.</p>
+                            <div class="unit-card-link">
+                                <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
+                                    más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg></span>
+                            </div>
+                        </div>
+                        <div class="unit-card-overlay"></div>
+                        <img src="assets/unit-ads.webp" class="unit-card-image" alt="THT Ads">
                     </div>
                 </div>
-                <div class="unit-card-overlay"></div>
-                <img src="assets/unit-ads.jpg" class="unit-card-image" alt="THT Ads">
-            </div>
 
-            <!-- Card 3: THT Devo -->
-            <div class="unit-card reveal">
-                <div class="unit-card-content">
-
-                    <img src="assets/logo-tht-devo-card.png" alt="THT Devo"
-                        class="h-9 w-auto mb-6 self-start object-contain unit-card-logo">
-                    <p class="unit-card-description">Desarrollo de software avanzado y arquitectura de agentes con IA.
-                        Soluciones orientadas a la automatización inteligente y la innovación tecnológica disruptiva.
-                    </p>
-                    <div class="unit-card-link">
-                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
-                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg></span>
+                <!-- Card 3: THT Devo -->
+                <div class="carousel-item-wrapper">
+                    <div class="unit-card h-[550px]">
+                        <div class="unit-card-content">
+                            <img src="assets/logo-tht-devo-card.png" alt="THT Devo"
+                                class="h-9 w-auto mb-6 self-start object-contain unit-card-logo">
+                            <p class="unit-card-description">Desarrollo de software avanzado y arquitectura de agentes con IA.
+                                Soluciones orientadas a la automatización inteligente y la innovación tecnológica disruptiva.
+                            </p>
+                            <div class="unit-card-link">
+                                <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
+                                    más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg></span>
+                            </div>
+                        </div>
+                        <div class="unit-card-overlay"></div>
+                        <img src="assets/unit-devo.webp" class="unit-card-image" alt="THT Devo">
                     </div>
                 </div>
-                <div class="unit-card-overlay"></div>
-                <img src="assets/unit-devo.jpg" class="unit-card-image" alt="THT Devo">
-            </div>
 
-            <!-- Card 4: Trinomium Real state -->
-            <div class="unit-card reveal">
-                <div class="unit-card-content">
-
-                    <img src="assets/logo-trinomium-card.png" alt="Trinomium Real State"
-                        class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
-                    <p class="unit-card-description">Inversión y desarrollo inmobiliario internacional (EE. UU. y
-                        España). Generamos valor patrimonial bajo una sólida visión financiera y estratégica de largo
-                        plazo.</p>
-                    <div class="unit-card-link">
-                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
-                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg></span>
+                <!-- Card 4: Trinomium Real state -->
+                <div class="carousel-item-wrapper">
+                    <div class="unit-card h-[550px]">
+                        <div class="unit-card-content">
+                            <img src="assets/logo-trinomium-card.png" alt="Trinomium Real State"
+                                class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
+                            <p class="unit-card-description">Inversión y desarrollo inmobiliario internacional (EE. UU. y
+                                España). Generamos valor patrimonial bajo una sólida visión financiera y estratégica de largo
+                                plazo.</p>
+                            <div class="unit-card-link">
+                                <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
+                                    más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg></span>
+                            </div>
+                        </div>
+                        <div class="unit-card-overlay"></div>
+                        <img src="assets/unit-trinomium.webp" class="unit-card-image" alt="Trinomium Real state">
                     </div>
                 </div>
-                <div class="unit-card-overlay"></div>
-                <img src="assets/unit-trinomium.jpg" class="unit-card-image" alt="Trinomium Real state">
-            </div>
 
-            <!-- Card 5: Fundación THT -->
-            <div class="unit-card reveal">
-                <div class="unit-card-content">
-
-                    <img src="assets/logo-fundacion-card.png" alt="Fundación THT"
-                        class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
-                    <p class="unit-card-description">Conectamos empresas e instituciones para brindar recursos a
-                        personas en situación de vulnerabilidad. Somos el puente sólido entre la solidaridad e impacto
-                        social real.</p>
-                    <div class="unit-card-link">
-                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
-                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg></span>
+                <!-- Card 5: Fundación THT -->
+                <div class="carousel-item-wrapper">
+                    <div class="unit-card h-[550px]">
+                        <div class="unit-card-content">
+                            <img src="assets/logo-fundacion-card.png" alt="Fundación THT"
+                                class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
+                            <p class="unit-card-description">Conectamos empresas e instituciones para brindar recursos a
+                                personas en situación de vulnerabilidad. Somos el puente sólido entre la solidaridad e impacto
+                                social real.</p>
+                            <div class="unit-card-link">
+                                <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
+                                    más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg></span>
+                            </div>
+                        </div>
+                        <div class="unit-card-overlay"></div>
+                        <img src="assets/unit-fundacion.webp" class="unit-card-image" alt="Fundación THT">
                     </div>
                 </div>
-                <div class="unit-card-overlay"></div>
-                <img src="assets/unit-fundacion.jpg" class="unit-card-image" alt="Fundación THT">
             </div>
 
-            <!-- Card 6: Césped en Mendoza -->
-            <div class="unit-card reveal">
-                <div class="unit-card-content">
-
-                    <img src="assets/logo-cesped-card.png" alt="Césped en Mendoza"
-                        class="h-11 w-auto mb-6 self-start object-contain unit-card-logo">
-                    <p class="unit-card-description">Líderes en comercialización de césped premium en la región. Calidad
-                        garantizada y asesoramiento técnico especializado para proyectos paisajísticos de alto nivel.
-                    </p>
-                    <div class="unit-card-link">
-                        <span class="text-xs font-medium text-white tracking-[0.2em] flex items-center gap-2">Ver
-                            más <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg></span>
-                    </div>
-                </div>
-                <div class="unit-card-overlay"></div>
-                <img src="assets/unit-cesped.jpg" class="unit-card-image" alt="Césped en Mendoza">
-            </div>
+            <!-- Right Arrow -->
+            <button class="carousel-arrow next" id="carousel-next" aria-label="Siguiente">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
         </div>
     </section>
 
@@ -1178,6 +1258,79 @@
                 }
             });
         });
+
+        // Units Carousel Logic (Arrows & Auto-play)
+        const carousel = document.getElementById('units-carousel');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+
+        if (carousel && prevBtn && nextBtn) {
+            const scrollAmount = () => {
+                const firstCard = carousel.querySelector('.carousel-item-wrapper');
+                return firstCard ? firstCard.getBoundingClientRect().width + 24 : 350;
+            };
+
+            // Arrows click listeners
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                carousel.scrollTo({
+                    left: carousel.scrollLeft - scrollAmount(),
+                    behavior: 'smooth'
+                });
+                resetAutoplay();
+            });
+
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                carousel.scrollTo({
+                    left: carousel.scrollLeft + scrollAmount(),
+                    behavior: 'smooth'
+                });
+                resetAutoplay();
+            });
+
+            // Autoplay logic
+            let autoplayInterval = setInterval(() => {
+                const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+                if (carousel.scrollLeft >= maxScrollLeft - 15) {
+                    // Loop back to start
+                    carousel.scrollTo({
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    carousel.scrollTo({
+                        left: carousel.scrollLeft + scrollAmount(),
+                        behavior: 'smooth'
+                    });
+                }
+            }, 4000); // Shift every 4 seconds
+
+            // Reset autoplay interval on manual interaction
+            function resetAutoplay() {
+                clearInterval(autoplayInterval);
+                autoplayInterval = setInterval(() => {
+                    const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+                    if (carousel.scrollLeft >= maxScrollLeft - 15) {
+                        carousel.scrollTo({
+                            left: 0,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        carousel.scrollTo({
+                            left: carousel.scrollLeft + scrollAmount(),
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 8000); // 8 seconds of pause after manual interaction
+            }
+
+            // Also reset autoplay on manual scroll/swipe
+            carousel.addEventListener('touchstart', resetAutoplay, { passive: true });
+            carousel.addEventListener('wheel', resetAutoplay, { passive: true });
+        }
     </script>
 </body>
 
