@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -133,19 +133,25 @@
         }
         
         .carousel-item-wrapper {
-            flex: 0 0 85%;
+            flex: 0 0 88%; /* Incrementado ligeramente en mobile para una vista más centrada */
             scroll-snap-align: start;
         }
         
+        @media (min-width: 640px) {
+            .carousel-item-wrapper {
+                flex: 0 0 70%;
+            }
+        }
+
         @media (min-width: 768px) {
             .carousel-item-wrapper {
-                flex: 0 0 45%;
+                flex: 0 0 46%;
             }
         }
         
         @media (min-width: 1024px) {
             .carousel-item-wrapper {
-                flex: 0 0 30%;
+                flex: 0 0 31%;
             }
         }
 
@@ -195,9 +201,9 @@
             right: 10px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 640px) {
             .carousel-arrow {
-                display: none; /* Hide on mobile to avoid overlap */
+                display: none; /* Ocultar sólo en celulares muy angostos donde el swipe táctil es preferible */
             }
         }
 
@@ -531,6 +537,39 @@
             right: 0;
             clip-path: polygon(0 100%, 100% 100%, 100% 0);
         }
+
+        /* Carousel Dots */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .carousel-dots {
+                display: none;
+            }
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .carousel-dot.active {
+            background: var(--primary-blue);
+            width: 24px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+        }
     </style>
 </head>
 
@@ -636,7 +675,7 @@
         </div>
     </section>
 
-    <section id="unidades" class="py-32 px-6 w-full max-w-[1600px] mx-auto overflow-hidden">
+    <section id="unidades" class="py-32 px-6 w-full max-w-[1600px] mx-auto" style="overflow-x: clip;">
         <div class="text-left mb-24 max-w-2xl">
             <span class="section-badge mb-6 reveal">Nuestras
                 Unidades</span>
@@ -672,7 +711,7 @@
                             </div>
                         </div>
                         <div class="unit-card-overlay"></div>
-                        <img src="assets/unit-tehuentec.webp" class="unit-card-image" alt="Tehuentec">
+                        <img src="assets/unit-tehuentec-custom.jpg" class="unit-card-image" alt="Tehuentec" style="transform: scale(1.6); object-position: center 15%;">
                     </div>
                 </div>
 
@@ -718,7 +757,7 @@
                             </div>
                         </div>
                         <div class="unit-card-overlay"></div>
-                        <img src="assets/unit-devo.webp" class="unit-card-image" alt="THT Devo">
+                        <img src="assets/unit-devo-custom.jpg" class="unit-card-image" alt="THT Devo">
                     </div>
                 </div>
 
@@ -775,6 +814,15 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
             </button>
+        </div>
+
+        <!-- Carousel Dots -->
+        <div class="carousel-dots" id="carousel-dots" aria-label="Navegación del carrusel">
+            <button class="carousel-dot active" data-index="0" aria-label="Card 1"></button>
+            <button class="carousel-dot" data-index="1" aria-label="Card 2"></button>
+            <button class="carousel-dot" data-index="2" aria-label="Card 3"></button>
+            <button class="carousel-dot" data-index="3" aria-label="Card 4"></button>
+            <button class="carousel-dot" data-index="4" aria-label="Card 5"></button>
         </div>
     </section>
 
@@ -1259,78 +1307,92 @@
             });
         });
 
-        // Units Carousel Logic (Arrows & Auto-play)
-        const carousel = document.getElementById('units-carousel');
-        const prevBtn = document.getElementById('carousel-prev');
-        const nextBtn = document.getElementById('carousel-next');
+        // Units Carousel - RAF animation, page-by-page navigation
+        (function () {
+            var carousel  = document.getElementById('units-carousel');
+            var prevBtn   = document.getElementById('carousel-prev');
+            var nextBtn   = document.getElementById('carousel-next');
+            if (!carousel || !prevBtn || !nextBtn) return;
 
-        if (carousel && prevBtn && nextBtn) {
-            const scrollAmount = () => {
-                const firstCard = carousel.querySelector('.carousel-item-wrapper');
-                return firstCard ? firstCard.getBoundingClientRect().width + 24 : 350;
-            };
+            var items     = Array.from(carousel.querySelectorAll('.carousel-item-wrapper'));
+            var dotsEls   = Array.from(document.querySelectorAll('.carousel-dot'));
+            var total     = items.length;
+            var cur       = 0;
+            var busy      = false;
+            var autoTimer = null;
+            var rafId     = null;
 
-            // Arrows click listeners
-            prevBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                carousel.scrollTo({
-                    left: carousel.scrollLeft - scrollAmount(),
-                    behavior: 'smooth'
-                });
-                resetAutoplay();
-            });
+            function cardW()   { return items[0] ? items[0].offsetWidth : 350; }
+            function perPage() { return Math.max(1, Math.round(carousel.offsetWidth / cardW())); }
+            function maxIdx()  { return Math.max(0, total - perPage()); }
 
-            nextBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                carousel.scrollTo({
-                    left: carousel.scrollLeft + scrollAmount(),
-                    behavior: 'smooth'
-                });
-                resetAutoplay();
-            });
-
-            // Autoplay logic
-            let autoplayInterval = setInterval(() => {
-                const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
-                if (carousel.scrollLeft >= maxScrollLeft - 15) {
-                    // Loop back to start
-                    carousel.scrollTo({
-                        left: 0,
-                        behavior: 'smooth'
-                    });
-                } else {
-                    carousel.scrollTo({
-                        left: carousel.scrollLeft + scrollAmount(),
-                        behavior: 'smooth'
-                    });
-                }
-            }, 4000); // Shift every 4 seconds
-
-            // Reset autoplay interval on manual interaction
-            function resetAutoplay() {
-                clearInterval(autoplayInterval);
-                autoplayInterval = setInterval(() => {
-                    const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
-                    if (carousel.scrollLeft >= maxScrollLeft - 15) {
-                        carousel.scrollTo({
-                            left: 0,
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        carousel.scrollTo({
-                            left: carousel.scrollLeft + scrollAmount(),
-                            behavior: 'smooth'
-                        });
-                    }
-                }, 8000); // 8 seconds of pause after manual interaction
+            function updateDots(i) {
+                dotsEls.forEach(function(d, j) { d.classList.toggle('active', j === i); });
             }
 
-            // Also reset autoplay on manual scroll/swipe
-            carousel.addEventListener('touchstart', resetAutoplay, { passive: true });
-            carousel.addEventListener('wheel', resetAutoplay, { passive: true });
-        }
+            function smoothTo(target) {
+                if (rafId) cancelAnimationFrame(rafId);
+                var from = carousel.scrollLeft;
+                var dist = target - from;
+                var dur  = 600;
+                var t0   = null;
+                carousel.style.scrollSnapType = 'none';
+
+                function tick(ts) {
+                    if (!t0) t0 = ts;
+                    var p    = Math.min((ts - t0) / dur, 1);
+                    var ease = p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p+2, 3)/2;
+                    carousel.scrollLeft = from + dist * ease;
+                    if (p < 1) {
+                        rafId = requestAnimationFrame(tick);
+                    } else {
+                        carousel.scrollLeft = target;
+                        carousel.style.scrollSnapType = 'x mandatory';
+                        busy = false; rafId = null;
+                    }
+                }
+                rafId = requestAnimationFrame(tick);
+            }
+
+            function scrollToIdx(idx) {
+                if (busy) return;
+                idx  = Math.min(Math.max(0, idx), maxIdx());
+                busy = true; cur = idx;
+                updateDots(idx);
+                var maxScroll = carousel.scrollWidth - carousel.clientWidth;
+                smoothTo(Math.min(idx * (cardW() + 24), maxScroll));
+            }
+
+            function goNext() {
+                var mi = maxIdx(), pp = perPage();
+                scrollToIdx(cur >= mi ? 0 : Math.min(cur + pp, mi));
+            }
+            function goPrev() {
+                var pp = perPage();
+                scrollToIdx(cur === 0 ? maxIdx() : Math.max(0, cur - pp));
+            }
+
+            function startAuto(ms) { clearInterval(autoTimer); autoTimer = setInterval(goNext, ms); }
+            function resetAuto()   { startAuto(8000); }
+            startAuto(4000);
+
+            prevBtn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); goPrev(); resetAuto(); });
+            nextBtn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); goNext(); resetAuto(); });
+            dotsEls.forEach(function(d) { d.addEventListener('click', function() { scrollToIdx(+d.dataset.index); resetAuto(); }); });
+
+            var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(en) {
+                    if (en.isIntersecting && en.intersectionRatio >= 0.5 && !busy) {
+                        var i = items.indexOf(en.target);
+                        if (i !== -1) { cur = i; updateDots(i); }
+                    }
+                });
+            }, { root: carousel, threshold: 0.5 });
+            items.forEach(function(it) { obs.observe(it); });
+
+            carousel.addEventListener('touchstart', resetAuto, { passive: true });
+            carousel.addEventListener('wheel',      resetAuto, { passive: true });
+        })();
     </script>
 </body>
 
