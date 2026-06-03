@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -675,7 +675,7 @@
         </div>
     </section>
 
-    <section id="unidades" class="py-32 px-6 w-full max-w-[1600px] mx-auto" style="overflow-x: clip;">
+    <section id="unidades" class="py-32 px-6 w-full max-w-[1600px] mx-auto overflow-hidden">
         <div class="text-left mb-24 max-w-2xl">
             <span class="section-badge mb-6 reveal">Nuestras
                 Unidades</span>
@@ -711,7 +711,7 @@
                             </div>
                         </div>
                         <div class="unit-card-overlay"></div>
-                        <img src="assets/unit-tehuentec-custom.jpg" class="unit-card-image" alt="Tehuentec" style="transform: scale(1.6); object-position: center 15%;">
+                        <img src="assets/unit-tehuentec-custom.jpg" class="unit-card-image" alt="Tehuentec">
                     </div>
                 </div>
 
@@ -1307,92 +1307,128 @@
             });
         });
 
-        // Units Carousel - RAF animation, page-by-page navigation
-        (function () {
-            var carousel  = document.getElementById('units-carousel');
-            var prevBtn   = document.getElementById('carousel-prev');
-            var nextBtn   = document.getElementById('carousel-next');
-            if (!carousel || !prevBtn || !nextBtn) return;
+        // Units Carousel Logic (Arrows & Auto-play)
+        const carousel = document.getElementById('units-carousel');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
 
-            var items     = Array.from(carousel.querySelectorAll('.carousel-item-wrapper'));
-            var dotsEls   = Array.from(document.querySelectorAll('.carousel-dot'));
-            var total     = items.length;
-            var cur       = 0;
-            var busy      = false;
-            var autoTimer = null;
-            var rafId     = null;
+        if (carousel && prevBtn && nextBtn) {
+            const scrollAmount = () => {
+                const firstCard = carousel.querySelector('.carousel-item-wrapper');
+                // Use offsetWidth or clientWidth if bounding rect behaves weirdly in desktop viewports
+                const cardWidth = firstCard ? (firstCard.offsetWidth || firstCard.getBoundingClientRect().width) : 350;
+                return cardWidth + 24; // Width + gap
+            };
 
-            function cardW()   { return items[0] ? items[0].offsetWidth : 350; }
-            function perPage() { return Math.max(1, Math.round(carousel.offsetWidth / cardW())); }
-            function maxIdx()  { return Math.max(0, total - perPage()); }
-
-            function updateDots(i) {
-                dotsEls.forEach(function(d, j) { d.classList.toggle('active', j === i); });
-            }
-
-            function smoothTo(target) {
-                if (rafId) cancelAnimationFrame(rafId);
-                var from = carousel.scrollLeft;
-                var dist = target - from;
-                var dur  = 600;
-                var t0   = null;
+            const performScroll = (direction) => {
                 carousel.style.scrollSnapType = 'none';
+                
+                // Explicitly read scrollLeft and perform mathematical assignment
+                const currentScroll = carousel.scrollLeft;
+                const shift = direction * scrollAmount();
+                const targetLeft = currentScroll + shift;
+                
+                carousel.scrollTo({
+                    left: targetLeft,
+                    behavior: 'smooth'
+                });
 
-                function tick(ts) {
-                    if (!t0) t0 = ts;
-                    var p    = Math.min((ts - t0) / dur, 1);
-                    var ease = p < 0.5 ? 4*p*p*p : 1 - Math.pow(-2*p+2, 3)/2;
-                    carousel.scrollLeft = from + dist * ease;
-                    if (p < 1) {
-                        rafId = requestAnimationFrame(tick);
-                    } else {
-                        carousel.scrollLeft = target;
+                setTimeout(() => {
+                    carousel.style.scrollSnapType = 'x mandatory';
+                }, 600);
+            };
+
+            // Arrows click listeners
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                performScroll(-1);
+                resetAutoplay();
+            });
+
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                performScroll(1);
+                resetAutoplay();
+            });
+
+            // Autoplay logic
+            let autoplayInterval = setInterval(() => {
+                const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+                if (carousel.scrollLeft >= maxScrollLeft - 15) {
+                    carousel.style.scrollSnapType = 'none';
+                    carousel.scrollTo({
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                    setTimeout(() => {
                         carousel.style.scrollSnapType = 'x mandatory';
-                        busy = false; rafId = null;
-                    }
+                    }, 600);
+                } else {
+                    performScroll(1);
                 }
-                rafId = requestAnimationFrame(tick);
+            }, 4000); // Shift every 4 seconds
+
+            // Reset autoplay interval on manual interaction
+            function resetAutoplay() {
+                clearInterval(autoplayInterval);
+                autoplayInterval = setInterval(() => {
+                    const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+                    if (carousel.scrollLeft >= maxScrollLeft - 15) {
+                        carousel.style.scrollSnapType = 'none';
+                        carousel.scrollTo({
+                            left: 0,
+                            behavior: 'smooth'
+                        });
+                        setTimeout(() => {
+                            carousel.style.scrollSnapType = 'x mandatory';
+                        }, 600);
+                    } else {
+                        performScroll(1);
+                    }
+                }, 8000); // 8 seconds of pause after manual interaction
             }
 
-            function scrollToIdx(idx) {
-                if (busy) return;
-                idx  = Math.min(Math.max(0, idx), maxIdx());
-                busy = true; cur = idx;
-                updateDots(idx);
-                var maxScroll = carousel.scrollWidth - carousel.clientWidth;
-                smoothTo(Math.min(idx * (cardW() + 24), maxScroll));
+            // Also reset autoplay on manual scroll/swipe
+            carousel.addEventListener('touchstart', resetAutoplay, { passive: true });
+            carousel.addEventListener('wheel', resetAutoplay, { passive: true });
+
+            // Dots logic
+            const dots = document.querySelectorAll('.carousel-dot');
+            const items = carousel.querySelectorAll('.carousel-item-wrapper');
+
+            function setActiveDot(index) {
+                dots.forEach((d, i) => d.classList.toggle('active', i === index));
             }
 
-            function goNext() {
-                var mi = maxIdx(), pp = perPage();
-                scrollToIdx(cur >= mi ? 0 : Math.min(cur + pp, mi));
-            }
-            function goPrev() {
-                var pp = perPage();
-                scrollToIdx(cur === 0 ? maxIdx() : Math.max(0, cur - pp));
-            }
-
-            function startAuto(ms) { clearInterval(autoTimer); autoTimer = setInterval(goNext, ms); }
-            function resetAuto()   { startAuto(8000); }
-            startAuto(4000);
-
-            prevBtn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); goPrev(); resetAuto(); });
-            nextBtn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); goNext(); resetAuto(); });
-            dotsEls.forEach(function(d) { d.addEventListener('click', function() { scrollToIdx(+d.dataset.index); resetAuto(); }); });
-
-            var obs = new IntersectionObserver(function(entries) {
-                entries.forEach(function(en) {
-                    if (en.isIntersecting && en.intersectionRatio >= 0.5 && !busy) {
-                        var i = items.indexOf(en.target);
-                        if (i !== -1) { cur = i; updateDots(i); }
+            // Sync dot on scroll using IntersectionObserver
+            const dotObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                        const idx = Array.from(items).indexOf(entry.target);
+                        if (idx !== -1) setActiveDot(idx);
                     }
                 });
             }, { root: carousel, threshold: 0.5 });
-            items.forEach(function(it) { obs.observe(it); });
 
-            carousel.addEventListener('touchstart', resetAuto, { passive: true });
-            carousel.addEventListener('wheel',      resetAuto, { passive: true });
-        })();
+            items.forEach(item => dotObserver.observe(item));
+
+            // Click on dot scrolls to that card
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const idx = +dot.dataset.index;
+                    const target = items[idx];
+                    if (target) {
+                        carousel.style.scrollSnapType = 'none';
+                        carousel.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+                        setTimeout(() => carousel.style.scrollSnapType = 'x mandatory', 600);
+                        setActiveDot(idx);
+                        resetAutoplay();
+                    }
+                });
+            });
+        }
     </script>
 </body>
 
