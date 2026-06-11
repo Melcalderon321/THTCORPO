@@ -1,0 +1,17 @@
+/*
+Theme Name: THT Corporation
+Theme URI: https://thtcorporation.com/
+Author: Tehuentec
+Author URI: https://tehuentec.com/
+Description: Divi Child Theme for THT Corporation — holding tecnológico con presencia global.
+Version: 1.0.0
+Template: Divi
+Text Domain: tht-theme
+*/
+
+:root {
+    --primary-blue: #0066FF;
+    --dark-blue: #003399;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}

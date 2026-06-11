@@ -881,9 +881,9 @@
             <!-- Sticky Image Side -->
             <div class="block h-[50vh] lg:h-screen lg:sticky lg:top-0 overflow-hidden bg-black">
                 <img src="assets/team-culture.jpg" alt="Cultura THT"
-                    class="w-full h-full object-cover object-center lg:object-left opacity-90 transition-all duration-700"
+                    class="w-full h-full object-cover object-center lg:object-left opacity-100 lg:opacity-90 transition-all duration-700"
                     id="experience-photo">
-                <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-black/60 via-transparent to-transparent z-10"></div>
+                <div class="absolute inset-0 hidden lg:block bg-gradient-to-r from-black/60 via-transparent to-transparent z-10"></div>
             </div>
 
             <!-- Scrollable Content Side -->
@@ -895,7 +895,7 @@
                     <p class="text-2xl text-gray-500 font-light max-w-lg mb-12">Equipos de alto rendimiento diseñando el
                         futuro tecnológico.</p>
                     <div class="flex flex-wrap gap-6 font-inter font-medium">
-                        <a href="#contacto"
+                        <a href="#contacto" id="open-join-modal-btn"
                             class="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl transition-all shadow-[0_10px_30px_rgba(0,102,255,0.2)] hover:scale-105 flex items-center justify-center gap-2">Sumate
                             al equipo
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1135,6 +1135,96 @@
         </div>
     </footer>
 
+    <!-- Modal de Postulación -->
+    <div id="join-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-card max-w-lg w-full p-8 relative border-white/10 mx-4 transform scale-95 transition-all duration-300 overflow-y-auto max-h-[90vh]" id="join-modal-container">
+            <!-- Botón Cerrar -->
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2" aria-label="Cerrar modal">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <!-- Contenido Modal -->
+            <div id="modal-form-content">
+                <h3 class="text-3xl font-bold text-white mb-2 font-poppins">Únete al equipo</h3>
+                <p class="text-gray-400 text-sm mb-6 font-inter">Completa tus datos para postularte a nuestras búsquedas activas y formar parte de THT Corporation.</p>
+                
+                <form id="join-team-form" class="space-y-6">
+                    <!-- Nombre y Apellido -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-medium uppercase tracking-widest text-gray-500 block">Nombre y apellido</label>
+                        <input type="text" name="nombre" required
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition-all font-inter placeholder-gray-600"
+                            placeholder="Tu nombre completo">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-medium uppercase tracking-widest text-gray-500 block">Email</label>
+                        <input type="email" name="email" required
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition-all font-inter placeholder-gray-600"
+                            placeholder="tu@correo.com">
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-medium uppercase tracking-widest text-gray-500 block">Teléfono</label>
+                        <input type="tel" name="telefono" required
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-blue-500 outline-none transition-all font-inter placeholder-gray-600"
+                            placeholder="Número de contacto">
+                    </div>
+
+
+
+                    <!-- Adjuntar CV -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-medium uppercase tracking-widest text-gray-500 block">Adjuntar CV</label>
+                        <div id="cv-dropzone" class="border-2 border-dashed border-white/10 hover:border-blue-500 rounded-xl p-6 text-center cursor-pointer transition-all bg-white/5 flex flex-col items-center justify-center gap-2">
+                            <input type="file" id="cv-file" name="cv" accept=".pdf,.doc,.docx" required class="hidden">
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                            <div class="text-sm text-gray-300 font-inter">
+                                <span class="font-semibold text-blue-500">Haz clic para subir</span> o arrastra tu archivo aquí
+                            </div>
+                            <p class="text-xs text-gray-500 font-inter">PDF, DOC, DOCX (Máx. 5MB)</p>
+                            <!-- File preview display -->
+                            <div id="file-preview" class="hidden mt-2 p-2 bg-white/10 border border-white/20 rounded-lg flex items-center justify-between gap-4 w-full">
+                                <span id="file-name" class="text-xs text-white truncate max-w-[80%] font-inter"></span>
+                                <button type="button" id="remove-file-btn" class="text-gray-400 hover:text-red-500 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enviar -->
+                    <button type="submit"
+                        class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-4 rounded-xl transition-all shadow-lg hover:shadow-blue-600/30 tracking-widest uppercase text-xs">
+                        Enviar postulación
+                    </button>
+                </form>
+            </div>
+
+            <!-- Pantalla de Éxito -->
+            <div id="modal-success-content" class="hidden flex flex-col items-center justify-center text-center py-10">
+                <div class="w-16 h-16 bg-blue-500/10 border border-blue-500/30 rounded-full flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="text-3xl font-bold text-white mb-2 font-poppins">¡Postulación Enviada!</h3>
+                <p class="text-gray-400 text-sm max-w-sm font-inter">Hemos recibido tu currículum. Si tu perfil se adapta a alguna de nuestras vacantes, te contactaremos pronto.</p>
+                <button id="success-close-btn" class="mt-8 px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl transition-all tracking-wider text-xs uppercase">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
@@ -1290,7 +1380,9 @@
             }
         }
 
-        playOverlay.addEventListener('click', toggleVideo);
+        if (playOverlay) {
+            playOverlay.addEventListener('click', toggleVideo);
+        }
 
         // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1429,6 +1521,165 @@
                 });
             });
         }
+
+        // Modal de Postulación logic
+        (function() {
+            const joinModal = document.getElementById('join-modal');
+            const openJoinModalBtn = document.getElementById('open-join-modal-btn');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const successCloseBtn = document.getElementById('success-close-btn');
+            const joinTeamForm = document.getElementById('join-team-form');
+            const modalFormContent = document.getElementById('modal-form-content');
+            const modalSuccessContent = document.getElementById('modal-success-content');
+            const cvFile = document.getElementById('cv-file');
+            const cvDropzone = document.getElementById('cv-dropzone');
+            const filePreview = document.getElementById('file-preview');
+            const fileName = document.getElementById('file-name');
+            const removeFileBtn = document.getElementById('remove-file-btn');
+            const joinModalContainer = document.getElementById('join-modal-container');
+
+            function openModal() {
+                joinModal.classList.remove('pointer-events-none');
+                gsap.to(joinModal, { opacity: 1, duration: 0.3, ease: "power2.out" });
+                gsap.fromTo(joinModalContainer, 
+                    { scale: 0.95, y: 20 },
+                    { scale: 1, y: 0, duration: 0.4, ease: "back.out(1.5)" }
+                );
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                gsap.to(joinModalContainer, { scale: 0.95, y: 20, duration: 0.3, ease: "power2.in" });
+                gsap.to(joinModal, { 
+                    opacity: 0, 
+                    duration: 0.3, 
+                    ease: "power2.in",
+                    onComplete: () => {
+                        joinModal.classList.add('pointer-events-none');
+                        document.body.style.overflow = '';
+                        joinTeamForm.reset();
+                        modalFormContent.classList.remove('hidden');
+                        modalSuccessContent.classList.add('hidden');
+                        resetFileDropzone();
+                    }
+                });
+            }
+
+            if (openJoinModalBtn) {
+                openJoinModalBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+            if (successCloseBtn) successCloseBtn.addEventListener('click', closeModal);
+
+            joinModal.addEventListener('click', (e) => {
+                if (e.target === joinModal) {
+                    closeModal();
+                }
+            });
+
+            // CV Dropzone interaction
+            if (cvDropzone && cvFile) {
+                cvDropzone.addEventListener('click', (e) => {
+                    if (!e.target.closest('#remove-file-btn')) {
+                        cvFile.click();
+                    }
+                });
+
+                cvFile.addEventListener('change', (e) => {
+                    handleFileSelect(e.target.files[0]);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    cvDropzone.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        cvDropzone.classList.add('border-blue-500', 'bg-blue-500/10');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    cvDropzone.addEventListener(eventName, (e) => {
+                        e.preventDefault();
+                        cvDropzone.classList.remove('border-blue-500', 'bg-blue-500/10');
+                    }, false);
+                });
+
+                cvDropzone.addEventListener('drop', (e) => {
+                    const dt = e.dataTransfer;
+                    const file = dt.files[0];
+                    handleFileSelect(file);
+                });
+            }
+
+            function handleFileSelect(file) {
+                if (!file) return;
+                const allowedTypes = ['.pdf', '.doc', '.docx'];
+                const extension = '.' + file.name.split('.').pop().toLowerCase();
+                if (!allowedTypes.includes(extension)) {
+                    alert('Por favor, selecciona un archivo válido (.pdf, .doc, .docx)');
+                    resetFileDropzone();
+                    return;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('El archivo supera el tamaño máximo permitido de 5MB');
+                    resetFileDropzone();
+                    return;
+                }
+                const container = new DataTransfer();
+                container.items.add(file);
+                cvFile.files = container.files;
+                fileName.textContent = file.name;
+                filePreview.classList.remove('hidden');
+            }
+
+            function resetFileDropzone() {
+                cvFile.value = '';
+                filePreview.classList.add('hidden');
+                fileName.textContent = '';
+            }
+
+            if (removeFileBtn) {
+                removeFileBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    resetFileDropzone();
+                });
+            }
+
+            // Form Submit transition
+            if (joinTeamForm) {
+                joinTeamForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(joinTeamForm);
+                    console.log('Postulación recibida:', {
+                        nombre: formData.get('nombre'),
+                        email: formData.get('email'),
+                        telefono: formData.get('telefono'),
+                        cv: formData.get('cv')
+                    });
+
+                    gsap.to(modalFormContent, {
+                        opacity: 0,
+                        y: -20,
+                        duration: 0.3,
+                        onComplete: () => {
+                            modalFormContent.classList.add('hidden');
+                            modalFormContent.style.opacity = '';
+                            modalFormContent.style.transform = '';
+                            modalSuccessContent.classList.remove('hidden');
+                            gsap.fromTo(modalSuccessContent, 
+                                { opacity: 0, y: 20 },
+                                { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                            );
+                        }
+                    });
+                });
+            }
+        })();
     </script>
 </body>
 
