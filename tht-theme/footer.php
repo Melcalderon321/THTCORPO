@@ -157,7 +157,7 @@
 
                 <!-- Enviar -->
                 <button type="submit"
-                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-4 rounded-xl transition-all shadow-lg hover:shadow-blue-600/30 tracking-widest uppercase text-xs">
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-4 rounded-xl transition-all shadow-lg hover:shadow-blue-600/30 tracking-widest text-xs">
                     Enviar postulación
                 </button>
             </form>
